@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+this script checks the reliability of tracts.
+procedure: take separate ROI files (or a single one that is split up
+by this script) and compute PFT using ROI seeding. Use multiple NPV values
+as inputted by the user (make sure at least 2, and return error if the user
+doesn't specify at least 2). Then count the number of streamlines that
+connect each pair of ROIs. Calculate how many more streamlines connect
+each pair of ROIs. Using some kind of criterion (still to be determined)
+determine whether each ROI is reliable
+Ideas for criterion:
+1. If you increase NPV by X, you should expect an increase of X if two
+sets of voxels were perfectly connected 1 to 1. You could calculate the
+difference between the expected streamline count and the
+2. Look at the distribution of streamlines across all subjects for that
+particular tract. If normally distributed, calculate standard deviation. Then
+determine whether a tract is valid or not for each subject by whether it
+has less than 2SD streamlines. The script can then spit out the % of subjects
+that had i tract valid. The user can then decide whether that is acceptable
+for their own study or not. With this option, the multiple NPVs may not be
+necessary.
+3. Calculate the variability in endpoint coverage. It's essentially a
+test-retest but within the same run. The idea is that if you're looking at
+a tract that exists, adding more seeds will not necessarily increase the
+endpoint coverage, but for something that is a false-positive, it may.
+"""
+import
