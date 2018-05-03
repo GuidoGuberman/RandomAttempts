@@ -419,6 +419,34 @@ end
 %command line.
 
 
+%AICHA rDLPFC 24 with 28; 28 with 360
+ROIs=[24 28 360];
+Mdiffs1=[];
+for i=1:size(ROIs,2);
+    Mdiffs1=[Mdiffs1; ROIs(1,i) nanmean(Aicha_CC_rDLPFC_sc24(2:end,find(Aicha_CC_rDLPFC_sc24(1,:)==ROIs(1,i))))-nanmean(Aicha_HC_rDLPFC_sc24(2:end,find(Aicha_HC_rDLPFC_sc24(1,:)==ROIs(1,i)))) ...
+        nanmean(Aicha_CC_rDLPFC_sc28(2:end,find(Aicha_CC_rDLPFC_sc28(1,:)==ROIs(1,i))))-nanmean(Aicha_HC_rDLPFC_sc28(2:end,find(Aicha_HC_rDLPFC_sc28(1,:)==ROIs(1,i))))];
+end
+
+
+
+
+
+%AICHA lDLPFC 27 with 57
+ROIs=[27 57];
+Mdiffs2=[];
+for i=1:size(ROIs,2);
+    Mdiffs2=[Mdiffs2; ROIs(1,i) nanmean(Aicha_CC_lDLPFC_sc27(2:end,find(Aicha_CC_lDLPFC_sc27(1,:)==ROIs(1,i))))-nanmean(Aicha_HC_lDLPFC_sc27(2:end,find(Aicha_HC_lDLPFC_sc27(1,:)==ROIs(1,i))))];
+end
+
+
+
+%BN rDLPFC 22 with 246
+ROIs=[22 246];
+Mdiffs3=[];
+for i=1:size(ROIs,2);
+    Mdiffs3=[Mdiffs3; ROIs(1,i) nanmean(BN_CC_rDLPFC_sc22(2:end,find(BN_CC_rDLPFC_sc22(1,:)==ROIs(1,i))))-nanmean(BN_HC_rDLPFC_sc22(2:end,find(BN_HC_rDLPFC_sc22(1,:)==ROIs(1,i))))];
+end
+
 
 
 
