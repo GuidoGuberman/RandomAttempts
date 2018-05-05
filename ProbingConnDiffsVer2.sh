@@ -67,24 +67,25 @@ do
 			cp rd_ransac.nii* "$nummni"_run"$numrun"_metrics/"$nummni"_run"$numrun"_rd.nii.gz
 			cp fodf.nii.gz "$nummni"_run"$numrun"_metrics/"$nummni"_run"$numrun"_fodf.nii.gz
 
-			cd $SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
+			PROJECT_DIR=$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
+			cd $PROJECT_DIR
 			rm "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt "$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt "$nummni"_run"$numrun"_"$parc"_DTImetrics.txt #RM here because they only get updated at the level of sub_run.
 
 			echo "Splitting labels for subject $nummni run $numrun $parc"
-			cd $SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
+			cd $PROJECT_DIR
 			mkdir "$nummni"_run"$numrun"_"$parc"_labels
 			cd "$nummni"_run"$numrun"_"$parc"_labels
 			mrconvert ../"$nummni"_"$parc"_in_dwi"$numrun".nii "$nummni"_"$parc"_in_dwi"$numrun"_INT32.nii -datatype int32
 			scil_split_volume_labels.py "$nummni"_"$parc"_in_dwi"$numrun"_INT32.nii ids
 
 
-			cd $SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
+			cd $PROJECT_DIR
 			for parc1rhROIs2 in "${parc1rhROI[@]}"
 			do
 				echo "Applying first ROI lbl$parc1rhROIs2, subject $nummni run $numrun"
 				scil_robust_filter_tractogram.py $SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated.trk \
 				"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs2".trk --drawn_roi \
-				$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_run"$numrun"_"$parc"_labels/"$parc1rhROIs2".nii* --either_end -f
+				$PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_labels/"$parc1rhROIs2".nii* --either_end -f
 			done
 
 			for parc1rhROIs in "${parc1rhROI[@]}"
@@ -96,16 +97,22 @@ do
 						echo "Applying second ROI lbl$roinum2 to lbl$parc1rhROIs, subject $nummni run $numrun"
 						scil_robust_filter_tractogram.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs".trk \
 						"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2".trk --drawn_roi \
-						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum2".nii* --either_end -f
+						$PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum2".nii* --either_end -f
+
+						echo "cutting streamlines in tract lbl$parc1rhROIs-lbl$roinum2"
+						scil_cut_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2".trk \
+						$RPOJECT_DIR/"$nummni"_run"$numrun"_"$parc"_labels/"$parc1rhROIs2".nii* $RPOJECT_DIR/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum2".nii* \
+						"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2"_cut.trk
+
 
 						echo "Computing tractometry metrics for subject $nummni run $numrun"
 
 						echo "Computing tract volume for tract connecting lbl$parc1rhROIs with lbl$roinum2"
-						scil_tractometry_bundle_volume.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2".trk \
+						scil_tractometry_bundle_volume.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2"_cut.trk \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_MNI2DWI"$numrun"_Warped.nii.gz >> "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt
 
 						echo "Computing AFD along streamlines for tract connecting lbl$parc1rhROIs with lbl$roinum2"
-						scil_compute_afd_along_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2".trk \
+						scil_compute_afd_along_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2"_cut.trk \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_metrics/"$nummni"_run"$numrun"_fodf.nii.gz --jump 1 --tp trackvis >>"$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
 						echo "Computing DTI metrics over streamlines for tract connecting lbl$parc1rhROIs with lbl$roinum2"
@@ -118,7 +125,7 @@ do
 						#$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_metrics/ad.nii.gz --binary --tp trackvis` >>"$nummni"_run"$numrun"_DTImetrics.txt
 
 						echo "$numni" "$numrun" "lbl$parc1rhROIs" "lbl$roinum2" \
-						`scil_compute_metrics_stats_over_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2".trk \
+						`scil_compute_metrics_stats_over_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2"_cut.trk \
 						--metrics $SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/fa.nii.gz \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/md_ransac.nii \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/rd_ransac.nii \
@@ -132,7 +139,7 @@ do
 				echo "Applying first ROI lbl$parc1lhROIs2, subject $nummni run $numrun"
 				scil_robust_filter_tractogram.py $SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated.trk \
 				"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs2".trk --drawn_roi \
-				$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_run"$numrun"_"$parc"_labels/"$parc1lhROIs2".nii* -f
+				$PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_labels/"$parc1lhROIs2".nii* -f
 			done
 
 			for parc1lhROIs in "${parc1lhROI[@]}"
@@ -144,19 +151,21 @@ do
 						echo "Applying second ROI lbl$roinum3 to lbl$parc1lhROIs, subject $nummni run $numrun"
 						scil_robust_filter_tractogram.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs".trk \
 						"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3".trk --drawn_roi \
-						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum3".nii* -f
+						$PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum3".nii* -f
 
 						echo "cutting streamlines in tract lbl$parc1lhROIs-lbl$roinum3"
 						scil_cut_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3".trk \
+						$RPOJECT_DIR/"$nummni"_run"$numrun"_"$parc"_labels/"$parc1lhROIs2".nii* $RPOJECT_DIR/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum3".nii* \
 						"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3"_cut.trk
+
 						echo "Computing tractometry metrics for subject $nummni run $numrun"
 
 						echo "Computing tract volume for tract connecting lbl$parc1lhROIs with lbl$roinum3"
-						scil_tractometry_bundle_volume.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3".trk \
+						scil_tractometry_bundle_volume.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3"_cut.trk \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_MNI2DWI"$numrun"_Warped.nii.gz >> "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt
 
 						echo "Computing AFD along streamlines for tract connecting lbl$parc1lhROIs with lbl$roinum3"
-						scil_compute_afd_along_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3".trk \
+						scil_compute_afd_along_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3"_cut.trk \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_metrics/"$nummni"_run"$numrun"_fodf.nii.gz --jump 1 --tp trackvis >>"$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
 						echo "Computing DTI metrics over streamlines for tract connecting lbl$parc1lhROIs with lbl$roinum3"
@@ -169,7 +178,7 @@ do
 					#$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_metrics/ad.nii.gz --binary --tp trackvis` >>"$nummni"_run"$numrun"_DTImetrics.txt
 
 						echo "$numni" "$numrun" "lbl$parc1lhROIs" "lbl$roinum3" \
-						`scil_compute_metrics_stats_over_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3".trk \
+						`scil_compute_metrics_stats_over_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3"_cut.trk \
 						--metrics $SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/fa.nii.gz \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/md_ransac.nii \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/rd_ransac.nii \
@@ -231,14 +240,19 @@ do
 						"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4".trk --drawn_roi \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum4".nii* --either_end -f
 
+						echo "cutting streamlines in tract lbl$parc2rhROIs-lbl$roinum4"
+						scil_cut_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4".trk \
+						$RPOJECT_DIR/"$nummni"_run"$numrun"_"$parc"_labels/"$parc2rhROIs2".nii* $RPOJECT_DIR/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum4".nii* \
+						"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4"_cut.trk
+
 						echo "Computing tractometry metrics for subject $nummni run $numrun"
 
 						echo "Computing tract volume for tract connecting lbl$parc2rhROIs with lbl$roinum4"
-						scil_tractometry_bundle_volume.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4".trk \
+						scil_tractometry_bundle_volume.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4"_cut.trk \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_MNI2DWI"$numrun"_Warped.nii.gz >> "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt
 
 						echo "Computing AFD along streamlines for tract connecting lbl$parc2rhROIs with lbl$roinum4"
-						scil_compute_afd_along_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4".trk \
+						scil_compute_afd_along_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4"_cut.trk \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_metrics/"$nummni"_run"$numrun"_fodf.nii.gz --jump 1 --tp trackvis >>"$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
 						echo "Computing DTI metrics over streamlines for tract connecting lbl$parc2rhROIs with lbl$roinum4"
@@ -251,7 +265,7 @@ do
 						#$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_metrics/ad.nii.gz --binary --tp trackvis` >>"$nummni"_run"$numrun"_DTImetrics.txt
 
 						echo "$numni" "$numrun" "lbl$parc2rhROIs" "lbl$roinum4" \
-						`scil_compute_metrics_stats_over_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4".trk \
+						`scil_compute_metrics_stats_over_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4"_cut.trk \
 						--metrics $SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/fa.nii.gz \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/md_ransac.nii \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/rd_ransac.nii \
