@@ -2,8 +2,9 @@ START_DIR=/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/ConnectivityProj
 TEMPLATE_DIR=/Users/Guido/Documents/Analyses/subjects/PedsData/Templates/DLPFCConnectivityStudy
 SUB_DIR=/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/
 
-subs=(TC001 TC007 TC033 TC042 TC054 TC056 TC057 TC071 TC073 TC074 TC076 TC077 TC078 TC079 TC050 TC069 TC002 TC003 TC004 TC005 TC006 TC008 TC009 TC010 TC011 TC013 TC014 TC015 TC016 TC017 TC018 \
-TC019 TC020 TC021 TC022 TC023 TC024 TC025 TC026 TC028 TC029 TC030 TC031 TC032 TC034 TC036 TC037 TC038 TC039 TC040 TC041 TC043 TC044 TC045 TC046 TC049 TC052 TC055 TC059 TC060 TC058 TC061)
+subs=(TC038)
+#(TC001 TC007 TC033 TC042 TC054 TC056 TC057 TC071 TC073 TC074 TC076 TC077 TC078 TC079 TC050 TC069 TC002 TC003 TC004 TC005 TC006 TC008 TC009 TC010 TC011 TC013 TC014 TC015 TC016 TC017 TC018 \
+#TC019 TC020 TC021 TC022 TC023 TC024 TC025 TC026 TC028 TC029 TC030 TC031 TC032 TC034 TC036 TC037 TC038 TC039 TC040 TC041 TC043 TC044 TC045 TC046 TC049 TC052 TC055 TC059 TC060 TC058 TC061)
 
 
 grp1=(CC)
@@ -92,7 +93,7 @@ do
 				do
 					if [ "$parc1rhROIs" -ne "$roinum2" -a "$parc1rhROIs" -lt "$roinum2" ]
 					then
-						echo "Applying second ROIs, subject $nummni run $numrun"
+						echo "Applying second ROI lbl$roinum2 to lbl$parc1rhROIs, subject $nummni run $numrun"
 						scil_robust_filter_tractogram.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs".trk \
 						"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2".trk --drawn_roi \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum2".nii* --either_end -f
@@ -131,7 +132,7 @@ do
 				echo "Applying first ROI lbl$parc1lhROIs2, subject $nummni run $numrun"
 				scil_robust_filter_tractogram.py $SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated.trk \
 				"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs2".trk --drawn_roi \
-				$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_run"$numrun"_"$parc"_labels/"$parc1lhROIs2".nii* --either_end -f
+				$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_run"$numrun"_"$parc"_labels/"$parc1lhROIs2".nii* -f
 			done
 
 			for parc1lhROIs in "${parc1lhROI[@]}"
@@ -140,11 +141,14 @@ do
 				do
 					if [ "$parc1lhROIs" -ne "$roinum3" -a "$parc1lhROIs" -lt "$roinum3" ]
 					then
-						echo "Applying second ROIs, subject $nummni run $numrun"
+						echo "Applying second ROI lbl$roinum3 to lbl$parc1lhROIs, subject $nummni run $numrun"
 						scil_robust_filter_tractogram.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs".trk \
 						"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3".trk --drawn_roi \
-						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum3".nii* --either_end -f
+						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum3".nii* -f
 
+						echo "cutting streamlines in tract lbl$parc1lhROIs-lbl$roinum3"
+						scil_cut_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3".trk \
+						"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3"_cut.trk
 						echo "Computing tractometry metrics for subject $nummni run $numrun"
 
 						echo "Computing tract volume for tract connecting lbl$parc1lhROIs with lbl$roinum3"
@@ -222,7 +226,7 @@ do
 				do
 					if [ "$parc2rhROIs" -ne "$roinum4" -a "$parc2rhROIs" -lt "$roinum4" ]
 					then
-						echo "Applying second ROIs, subject $nummni run $numrun"
+						echo "Applying second ROI lbl$roinum4 to lbl$parc2rhROIs, subject $nummni run $numrun"
 						scil_robust_filter_tractogram.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs".trk \
 						"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4".trk --drawn_roi \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_run"$numrun"_"$parc"_labels/"$roinum4".nii* --either_end -f
