@@ -16,10 +16,19 @@ parc2rhROI=(22 246)
 #CC
 for parc in "${parc1[@]}"
 do
-  for nummni in "${CC_grp[@]}"
+  GRP=(CC)
+  for numrun in "${runs[@]}"
   do
-    GRP=(CC)
-    for numrun in "${runs[@]}"
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
+
+    for nummni in "${CC_grp[@]}"
     do
       SUB_DIR=$START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/
       PROJECT_DIR=$SUB_DIR/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
@@ -59,7 +68,7 @@ do
       echo `awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 
     done
-  done
+
         echo `awk -F ":|," '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
@@ -67,16 +76,26 @@ do
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
         rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
-done
 
+ done
+done
 
 #HC
 for parc in "${parc1[@]}"
 do
-  for nummni in "${HC_grp[@]}"
+  GRP=(HC)
+  for numrun in "${runs[@]}"
   do
-    GRP=(HC)
-    for numrun in "${runs[@]}"
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
+
+    for nummni in "${HC_grp[@]}"
     do
       SUB_DIR=$START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/
       PROJECT_DIR=$SUB_DIR/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
@@ -116,7 +135,7 @@ do
       echo `awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 
     done
-  done
+
         echo `awk -F ":|," '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
@@ -124,19 +143,28 @@ do
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
         rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+
+ done
 done
-
-
 
 
 #BN atlas
 #CC
 for parc in "${parc2[@]}"
 do
-  for nummni in "${CC_grp[@]}"
+  GRP=(CC)
+  for numrun in "${runs[@]}"
   do
-    GRP=(CC)
-    for numrun in "${runs[@]}"
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
+
+    for nummni in "${CC_grp[@]}"
     do
       SUB_DIR=$START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/
       PROJECT_DIR=$SUB_DIR/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
@@ -166,7 +194,7 @@ do
       echo `awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 
     done
-  done
+
         echo `awk -F ":|," '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
@@ -174,16 +202,26 @@ do
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
         rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
-done
 
+ done
+done
 
 #HC
 for parc in "${parc2[@]}"
 do
-  for nummni in "${HC_grp[@]}"
+  GRP=(HC)
+  for numrun in "${runs[@]}"
   do
-    GRP=(HC)
-    for numrun in "${runs[@]}"
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
+
+    for nummni in "${HC_grp[@]}"
     do
       SUB_DIR=$START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/
       PROJECT_DIR=$SUB_DIR/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
@@ -213,7 +251,7 @@ do
       echo `awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 
     done
-  done
+
         echo `awk -F ":|," '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
@@ -221,4 +259,6 @@ do
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
         rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+
+ done
 done
