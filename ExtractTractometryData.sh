@@ -58,7 +58,7 @@ do
       echo "$nummni" `awk '{print $2 " " $3 " " $13 " " $14 " " $15}' "$PROJECT_DIR"/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
 
       #Tract volume
-      echo `awk "/volume/{print}" $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+      echo `awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 
     done
   done
@@ -115,7 +115,7 @@ do
       echo "$nummni" `awk '{print $2 " " $3 " " $13 " " $14 " " $15}' "$PROJECT_DIR"/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
 
       #Tract volume
-      echo `awk "/volume/{print}" "$PROJECT_DIR"/"$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+      echo `awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 
     done
   done
@@ -165,7 +165,7 @@ do
       echo "$nummni" `awk '{print $2 " " $3 " " $13 " " $14 " " $15}' "$PROJECT_DIR"/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
 
       #Tract volume
-      echo `awk "/volume/{print}" "$PROJECT_DIR"/"$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+      echo `awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 
     done
   done
@@ -212,7 +212,7 @@ do
       echo "$nummni" `awk '{print $2 " " $3 " " $13 " " $14 " " $15}' "$PROJECT_DIR"/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
 
       #Tract volume
-      echo `awk "/volume/{print}" "$PROJECT_DIR"/"$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+      echo `awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 
     done
   done
