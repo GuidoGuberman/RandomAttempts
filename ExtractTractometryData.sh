@@ -3,7 +3,7 @@ HC_grp=(TC002 TC003 TC004 TC005 TC006 TC008 TC009 TC010 TC011 TC013 TC014 TC015 
 TC037 TC038 TC039 TC040 TC041 TC043 TC044 TC045 TC046 TC049 TC052 TC055 TC059 TC060 TC058 TC061) #HC
 runs=(1)
 START_DIR=/Users/Guido/Documents/Analyses/subjects/PedsData/MNI
-OUT_DIR=$START_DIR/ConnectivityProject/
+OUT_DIR=$START_DIR/ConnectivityProject
 parc1=(AICHA_1mm)
 parc2=(BN_Atlas_246_1mm)
 parcs=(AICHA_1mm BN_Atlas_246_1mm)
@@ -19,10 +19,10 @@ do
   GRP=(CC)
   for numrun in "${runs[@]}"
   do
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
@@ -86,10 +86,10 @@ do
   GRP=(HC)
   for numrun in "${runs[@]}"
   do
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
@@ -155,10 +155,10 @@ do
   GRP=(CC)
   for numrun in "${runs[@]}"
   do
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
@@ -212,10 +212,10 @@ do
   GRP=(HC)
   for numrun in "${runs[@]}"
   do
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
-    rm $OUT_DIR/"$parc"/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+    rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
     rm $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
