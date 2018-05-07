@@ -15,6 +15,7 @@ parc2rhROI=(22 246)
 
 ######################################################
 #AICHA atlas
+
 for parc in "${parc1[@]}"
 do
   for nummni in "${CC_grp[@]}"
