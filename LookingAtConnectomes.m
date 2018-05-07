@@ -441,9 +441,9 @@ binAicha_HC_rDLPFC_sc28=Aicha_HC_rDLPFC_sc28(2:end,2:end);
 binAicha_HC_rDLPFC_sc28=logical(binAicha_HC_rDLPFC_sc28)
 degAicha_HC_rDLPFC_sc28=nansum(binAicha_HC_rDLPFC_sc28,2)
 
-binAicha_CC_lDLPFC_sc19=Aicha_CC_lDLPFC_sc21(2:end,2:end);
-binAicha_CC_lDLPFC_sc19=logical(binAicha_CC_lDLPFC_sc21);
-degAicha_CC_lDLPFC_sc19=nansum(binAicha_CC_lDLPFC_sc21,2);
+binAicha_CC_lDLPFC_sc19=Aicha_CC_lDLPFC_sc19(2:end,2:end);
+binAicha_CC_lDLPFC_sc19=logical(binAicha_CC_lDLPFC_sc19);
+degAicha_CC_lDLPFC_sc19=nansum(binAicha_CC_lDLPFC_sc19,2);
 
 binAicha_HC_lDLPFC_sc19=Aicha_HC_lDLPFC_sc19(2:end,2:end);
 binAicha_HC_lDLPFC_sc19=logical(binAicha_HC_lDLPFC_sc19);
@@ -736,19 +736,19 @@ degBN_HC_lDLPFC_sc21=nansum(binBN_HC_lDLPFC_sc21,2);
 
 %% Compare nodal degrees
 
-[H,P]=ttest2(degAicha_HC_rDLPFC,degAicha_CC_rDLPFC)
-[H,P]=ttest2(degAicha_HC_lDLPFC,degAicha_CC_lDLPFC)
-[H,P]=ttest2(degBN_HC_rDLPFC,degBN_CC_rDLPFC)
-[H,P]=ttest2(degBN_HC_lDLPFC,degBN_CC_lDLPFC)
+% [H,P]=ttest2(degAicha_HC_rDLPFC,degAicha_CC_rDLPFC)
+% [H,P]=ttest2(degAicha_HC_lDLPFC,degAicha_CC_lDLPFC)
+% [H,P]=ttest2(degBN_HC_rDLPFC,degBN_CC_rDLPFC)
+% [H,P]=ttest2(degBN_HC_lDLPFC,degBN_CC_lDLPFC)
 
-[H,P]=ttest2(degAicha_HC_rDLPFC_sc20,degAicha_CC_rDLPFC_sc20)
-[H,P]=ttest2(degAicha_HC_rDLPFC_sc22,degAicha_CC_rDLPFC_sc22)
-[H,P]=ttest2(degAicha_HC_rDLPFC_sc24,degAicha_CC_rDLPFC_sc24)%SIGNIFICANT (doesn't survive Bonferroni but most likely survives FDR)
+[H,P1]=ttest2(degAicha_HC_rDLPFC_sc20,degAicha_CC_rDLPFC_sc20)
+[H,P2]=ttest2(degAicha_HC_rDLPFC_sc22,degAicha_CC_rDLPFC_sc22)
+[H,P3]=ttest2(degAicha_HC_rDLPFC_sc24,degAicha_CC_rDLPFC_sc24)%SIGNIFICANT (doesn't survive Bonferroni but most likely survives FDR)
+[H,P4]=ttest2(degAicha_HC_rDLPFC_sc26,degAicha_CC_rDLPFC_sc26)
+[H,P5]=ttest2(degAicha_HC_rDLPFC_sc28,degAicha_CC_rDLPFC_sc28)
+[H,P6]=ttest2(degAicha_HC_lDLPFC_sc19,degAicha_CC_lDLPFC_sc19)%HIGHLY SIGNIFICANT (survives Bonferroni)
+
 Mdiff=nanmean(degAicha_CC_rDLPFC_sc24)-nanmean(degAicha_HC_rDLPFC_sc24)%Less connected
-
-[H,P]=ttest2(degAicha_HC_rDLPFC_sc26,degAicha_CC_rDLPFC_sc26)
-[H,P]=ttest2(degAicha_HC_rDLPFC_sc28,degAicha_CC_rDLPFC_sc28)
-[H,P]=ttest2(degAicha_HC_lDLPFC_sc19,degAicha_CC_lDLPFC_sc19)%HIGHLY SIGNIFICANT (survives Bonferroni)
 MDiff=nanmean(degAicha_CC_lDLPFC_sc19)-nanmean(degAicha_HC_lDLPFC_sc19)%More connected
 
 
