@@ -15,7 +15,7 @@ parc2rhROI=(22 246)
 
 ######################################################
 #AICHA atlas
-
+#CC
 for parc in "${parc1[@]}"
 do
   for nummni in "${CC_grp[@]}"
@@ -33,7 +33,7 @@ do
         do
           if [ "$parc1rhROIs" -ne "$roinum2" -a "$parc1rhROIs" -lt "$roinum2" ]
           then
-            echo "$nummni" "$parc1rhROIs"_"$roinum2">>tmp2.txt
+            echo "$nummni" "$parc1rhROIs"_"$roinum2">>$OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt
           fi
         done
       done
@@ -44,32 +44,35 @@ do
         do
           if [ "$parc1lhROIs" -ne "$roinum2" -a "$parc1lhROIs" -lt "$roinum2" ]
           then
-            echo "$nummni" "$parc1lhROIs"_"$roinum2">>tmp2.txt
+            echo "$nummni" "$parc1lhROIs"_"$roinum2">>$OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt
           fi
         done
       done
+      #AFD along streamlines
+      echo `awk "/mean_afd/{print}" "$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+
+      #DTI metrics
+      echo "$nummni" `awk '{print $2 " " $3 " " $4 " " $5 " " $6}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $7 " " $8 " " $9}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $10 " " $11 " " $12}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt` >> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $13 " " $14 " " $15}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+
+      #Tract volume
+      echo `awk "/volume/{print}" $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+
     done
   done
-        #AFD along streamlines
-        awk "/mean_afd/{print}" "$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt >>tmpAFD.txt
-        awk -F ":|," '{print $2}' tmpAFD.txt > tmpAFD.txt
-        paste tmp2.txt tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
+        echo `awk -F ":|," '{print $2}' $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+        paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
-        #DTI metrics
-        echo awk '{print $2 " " $3 " " $4 " " $5 " " $6}' All_"$GRP"_run"$numrun"_"$parc"_FA.txt
-        awk '{print $2 " " $3 " " $7 " " $8 " " $9}' All_"$GRP"_run"$numrun"_"$parc"_MD.txt
-        awk '{print $2 " " $3 " " $10 " " $11 " " $12}' All_"$GRP"_run"$numrun"_"$parc"_RD.txt
-        awk '{print $2 " " $3 " " $13 " " $14 " " $15}' All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+        echo `awk -F '{print $2}' $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+        paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
-        #Tract volume
-        awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt >>tmpVols.txt
-        awk -F '{print $2}' tmpVols.txt > tmpVols.txt
-        paste tmp2.txt tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
-
-        rm tmp2.txt
+        rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 done
 
 
+#HC
 for parc in "${parc1[@]}"
 do
   for nummni in "${HC_grp[@]}"
@@ -87,7 +90,7 @@ do
         do
           if [ "$parc1rhROIs" -ne "$roinum2" -a "$parc1rhROIs" -lt "$roinum2" ]
           then
-            echo "$nummni" "$parc1rhROIs"_"$roinum2">>tmp2.txt
+            echo "$nummni" "$parc1rhROIs"_"$roinum2">>$OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt
           fi
         done
       done
@@ -98,36 +101,38 @@ do
         do
           if [ "$parc1lhROIs" -ne "$roinum2" -a "$parc1lhROIs" -lt "$roinum2" ]
           then
-            echo "$nummni" "$parc1lhROIs"_"$roinum2">>tmp2.txt
+            echo "$nummni" "$parc1lhROIs"_"$roinum2">>$OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt
           fi
         done
       done
+      #AFD along streamlines
+      echo `awk "/mean_afd/{print}" "$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+
+      #DTI metrics
+      echo "$nummni" `awk '{print $2 " " $3 " " $4 " " $5 " " $6}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $7 " " $8 " " $9}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $10 " " $11 " " $12}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt` >> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $13 " " $14 " " $15}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+
+      #Tract volume
+      echo `awk "/volume/{print}" $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+
     done
   done
-        #AFD along streamlines
-        awk "/mean_afd/{print}" "$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt >>tmpAFD.txt
-        awk -F ":|," '{print $2}' tmpAFD.txt > tmpAFD.txt
-        paste tmp2.txt tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
+        echo `awk -F ":|," '{print $2}' $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+        paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
-        #DTI metrics
-        echo awk '{print $2 " " $3 " " $4 " " $5 " " $6}' All_"$GRP"_run"$numrun"_"$parc"_FA.txt
-        awk '{print $2 " " $3 " " $7 " " $8 " " $9}' All_"$GRP"_run"$numrun"_"$parc"_MD.txt
-        awk '{print $2 " " $3 " " $10 " " $11 " " $12}' All_"$GRP"_run"$numrun"_"$parc"_RD.txt
-        awk '{print $2 " " $3 " " $13 " " $14 " " $15}' All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+        echo `awk -F '{print $2}' $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+        paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
-        #Tract volume
-        awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt >>tmpVols.txt
-        awk -F '{print $2}' tmpVols.txt > tmpVols.txt
-        paste tmp2.txt tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
-
-        rm tmp2.txt
+        rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 done
 
 
 
 
-
-#BN Atlas
+#BN atlas
+#CC
 for parc in "${parc2[@]}"
 do
   for nummni in "${CC_grp[@]}"
@@ -139,38 +144,42 @@ do
       PROJECT_DIR=$SUB_DIR/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
       cd $PROJECT_DIR
 
-      for parc2rhROIs in "${parc2rhROI[@]}"
+      for parc1rhROIs in "${parc2rhROI[@]}"
       do
         for roinum2 in "${parc2rhROI[@]}"
         do
           if [ "$parc2rhROIs" -ne "$roinum2" -a "$parc2rhROIs" -lt "$roinum2" ]
           then
-            echo "$nummni" "$parc2rhROIs"_"$roinum2">>tmp2.txt
+            echo "$nummni" "$parc2rhROIs"_"$roinum2">>$OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt
           fi
         done
       done
+
+      #AFD along streamlines
+      echo `awk "/mean_afd/{print}" "$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+
+      #DTI metrics
+      echo "$nummni" `awk '{print $2 " " $3 " " $4 " " $5 " " $6}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $7 " " $8 " " $9}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $10 " " $11 " " $12}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt` >> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $13 " " $14 " " $15}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+
+      #Tract volume
+      echo `awk "/volume/{print}" $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+
     done
   done
-        #AFD along streamlines
-        awk "/mean_afd/{print}" "$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt >>tmpAFD.txt
-        awk -F ":|," '{print $2}' tmpAFD.txt > tmpAFD.txt
-        paste tmp2.txt tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
+        echo `awk -F ":|," '{print $2}' $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+        paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
-        #DTI metrics
-        echo awk '{print $2 " " $3 " " $4 " " $5 " " $6}' All_"$GRP"_run"$numrun"_"$parc"_FA.txt
-        awk '{print $2 " " $3 " " $7 " " $8 " " $9}' All_"$GRP"_run"$numrun"_"$parc"_MD.txt
-        awk '{print $2 " " $3 " " $10 " " $11 " " $12}' All_"$GRP"_run"$numrun"_"$parc"_RD.txt
-        awk '{print $2 " " $3 " " $13 " " $14 " " $15}' All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+        echo `awk -F '{print $2}' $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+        paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
-        #Tract volume
-        awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt >>tmpVols.txt
-        awk -F '{print $2}' tmpVols.txt > tmpVols.txt
-        paste tmp2.txt tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
-
-        rm tmp2.txt
+        rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 done
 
 
+#HC
 for parc in "${parc2[@]}"
 do
   for nummni in "${HC_grp[@]}"
@@ -188,27 +197,30 @@ do
         do
           if [ "$parc2rhROIs" -ne "$roinum2" -a "$parc2rhROIs" -lt "$roinum2" ]
           then
-            echo "$nummni" "$parc2rhROIs"_"$roinum2">>tmp2.txt
+            echo "$nummni" "$parc2rhROIs"_"$roinum2">>$OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt
           fi
         done
       done
+
+      #AFD along streamlines
+      echo `awk "/mean_afd/{print}" "$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+
+      #DTI metrics
+      echo "$nummni" `awk '{print $2 " " $3 " " $4 " " $5 " " $6}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_FA.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $7 " " $8 " " $9}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_MD.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $10 " " $11 " " $12}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt` >> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_RD.txt
+      echo "$nummni" `awk '{print $2 " " $3 " " $13 " " $14 " " $15}' $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_DTImetrics.txt`>> $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+
+      #Tract volume
+      echo `awk "/volume/{print}" $PROJECT_DIR/"$nummni"_run"$numrun"_"$parc"_tractVolumes.txt` >>$OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+
     done
   done
-        #AFD along streamlines
-        awk "/mean_afd/{print}" "$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt >>tmpAFD.txt
-        awk -F ":|," '{print $2}' tmpAFD.txt > tmpAFD.txt
-        paste tmp2.txt tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
+        echo `awk -F ":|," '{print $2}' $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
+        paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
-        #DTI metrics
-        echo awk '{print $2 " " $3 " " $4 " " $5 " " $6}' All_"$GRP"_run"$numrun"_"$parc"_FA.txt
-        awk '{print $2 " " $3 " " $7 " " $8 " " $9}' All_"$GRP"_run"$numrun"_"$parc"_MD.txt
-        awk '{print $2 " " $3 " " $10 " " $11 " " $12}' All_"$GRP"_run"$numrun"_"$parc"_RD.txt
-        awk '{print $2 " " $3 " " $13 " " $14 " " $15}' All_"$GRP"_run"$numrun"_"$parc"_AD.txt
+        echo `awk -F '{print $2}' $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+        paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
-        #Tract volume
-        awk "/volume/{print}" "$nummni"_run"$numrun"_"$parc"_tractVolumes.txt >>tmpVols.txt
-        awk -F '{print $2}' tmpVols.txt > tmpVols.txt
-        paste tmp2.txt tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
-
-        rm tmp2.txt
+        rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
 done
