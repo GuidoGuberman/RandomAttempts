@@ -65,7 +65,7 @@ do
         echo `awk -F ":|," '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
-        echo `awk -F '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+        echo `awk '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
         rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
@@ -122,7 +122,7 @@ do
         echo `awk -F ":|," '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
-        echo `awk -F '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+        echo `awk '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
         rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
@@ -172,7 +172,7 @@ do
         echo `awk -F ":|," '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
-        echo `awk -F '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+        echo `awk '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
         rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
@@ -219,7 +219,7 @@ do
         echo `awk -F ":|," '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpAFD.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_AFDalongstrs.txt
 
-        echo `awk -F '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
+        echo `awk '{print $2}' "$OUT_DIR"/"$parc"/"$GRP"_Group/tmpVols.txt` > $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
         paste $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt > $OUT_DIR/"$parc"/"$GRP"_Group/All_"$GRP"_run"$numrun"_"$parc"_tractVolumes.txt
 
         rm $OUT_DIR/"$parc"/"$GRP"_Group/tmp2.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpAFD.txt $OUT_DIR/"$parc"/"$GRP"_Group/tmpVols.txt
