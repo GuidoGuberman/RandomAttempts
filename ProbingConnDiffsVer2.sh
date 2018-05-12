@@ -113,7 +113,7 @@ do
 						echo "Computing AFD along streamlines for tract connecting lbl$parc1rhROIs with lbl$roinum2"
 						scil_compute_mean_afd_map_from_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2"_cut.trk \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_metrics/"$nummni"_run"$numrun"_fodf.nii.gz \
-						"$nummni"_run"$numrun"_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2"_meanAFD.nii "$nummni"_run"$numrun"_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2"_meanRD.nii --jump 2 --tp trackvis
+						"$nummni"_run"$numrun"_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2"_meanAFD.nii "$nummni"_run"$numrun"_"$parc"_lbl"$parc1rhROIs"_lbl"$roinum2"_meanRD.nii --jump 2 --tp trackvis -f
 
 						echo "Computing DTI metrics over streamlines for tract connecting lbl$parc1rhROIs with lbl$roinum2"
 
@@ -168,7 +168,7 @@ do
 						echo "Computing AFD along streamlines for tract connecting lbl$parc1lhROIs with lbl$roinum3"
 						scil_compute_mean_afd_map_from_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3"_cut.trk \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_metrics/"$nummni"_run"$numrun"_fodf.nii.gz \
-						"$nummni"_run"$numrun"_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3"_meanAFD.nii "$nummni"_run"$numrun"_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3"_meanRD.nii --jump 2 --tp trackvis
+						"$nummni"_run"$numrun"_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3"_meanAFD.nii "$nummni"_run"$numrun"_"$parc"_lbl"$parc1lhROIs"_lbl"$roinum3"_meanRD.nii --jump 2 --tp trackvis -f
 
 						echo "Computing DTI metrics over streamlines for tract connecting lbl$parc1lhROIs with lbl$roinum3"
 
@@ -258,7 +258,7 @@ do
 						echo "Computing AFD along streamlines for tract connecting lbl$parc2rhROIs with lbl$roinum4"
 						scil_compute_mean_afd_map_from_streamlines.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4"_cut.trk \
 						$SUB_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_run"$numrun"_metrics/"$nummni"_run"$numrun"_fodf.nii.gz \
-						"$nummni"_run"$numrun"_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4"_meanAFD.nii "$nummni"_run"$numrun"_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4"_meanRD.nii --jump 2 --tp trackvis
+						"$nummni"_run"$numrun"_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4"_meanAFD.nii "$nummni"_run"$numrun"_"$parc"_lbl"$parc2rhROIs"_lbl"$roinum4"_meanRD.nii --jump 2 --tp trackvis -f
 
 
 						#>>"$nummni"_run"$numrun"_"$parc"_AFDalongstrs.txt
