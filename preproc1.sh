@@ -21,7 +21,7 @@ do
 
 		echo "Converting to RAS (mrconvert) for subject $nummni run $numrun"
 		rm "$nummni"_dwi"$numrun".nii "$nummni"_bvecs"$numrun"_x
-		mrconvert ../"$nummni"_DWI"$numrun".nii.gz "$nummni"_dwi"$numrun".nii -stride +1,+2,+3,+4
+		mrconvert ../"$nummni"_DWI"$numrun".nii* "$nummni"_dwi"$numrun".nii -stride +1,+2,+3,+4
 		scil_flip_grad.py ../bvecs"$numrun" "$nummni"_bvecs"$numrun"_x x --fsl
 		cp ../bvals"$numrun" bvals"$numrun"
 
