@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+#dir_path='/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/TC001/DWI/Preproc1/TC001_diff1/'
+dir_path='/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/'
+#HC_subs= [TC002 TC003 TC004 TC005 TC006 TC008 TC009 TC010 TC011 TC013 TC014 TC015 TC016 TC017 TC018 TC019 TC020 TC021 TC022 TC023 TC024 TC025 TC026 TC028 TC029 TC030 TC031 TC032 TC034 TC036 \
+#TC037 TC038 TC039 TC040 TC041 TC043 TC044 TC045 TC046 TC049 TC052 TC055 TC059 TC060 TC058 TC061]
+#CC_subs= [TC001 TC007 TC033 TC042 TC054 TC056 TC057 TC071 TC073 TC074 TC076 TC077 TC078 TC079 TC050 TC069]
+
+
+import sys
+sys.path.append('/Users/Guido/Desktop/ResearchDiffusion/scilpy/scripts')
+print(sys.path)
+import scil_count_streamlines
+import argparse
+
+import os
+os.chdir(os.path.dirname(os.path.join(dir_path,'TC001','DWI','Preproc1','TC001_diff1')))
+os.getcwd()
+
+
+parser = argparse.ArgumentParser("name", description="my desc")
+parser.add_argument("var",action="store",help="the tractogram")
+result = parser.parse_args()
+print(scil_count_streamlines.get_tract_count(result.var))
+
+
+
+"""
+def main():
+    parser = argparse.ArgumentParser("name", description="my desc")
+    parser.add_argument("var",action="store",help="the tractogram")
+    return parser
+
+def counter(var):
+    return scil_count_streamlines.get_tract_count(var)
+
+print(counter(parser.var))
+
+
+if __name__ == "__main__":
+    main()
+"""
