@@ -479,3 +479,22 @@ Aicha_rDLPFCSigResults(5,:)=Aicha_sig_labels;
 Aicha_lDLPFCSigResults
 
 
+
+
+%% Follow-up analyses
+%total number of streamlines between groups
+CC_strs=[3977344, 2516943, 4137991, 2802682, 2479361, 2447485, 4728235, 2686240, 2493739, 2639602, 2798498, 2619986, 2756129, 2609117, 2953998, 3134095];
+HC_strs=[2726197, 2599035, 2453146, 2783387, 2729751, 2696889, 5427167, 2669944, 2836902, 3112364, 2735507, 2727913, 3860319, 2870103, 3039772, 2402047,...
+    2968707, 2731092, 2457032, 2605310, 2715354, 2755162, 3142640, 2575148, 2696554, 5317977, 3254845, 2717667, 2354266, 2666162, 2796350, 5800878, 2965766, ...
+    2540950, 2380272, 2959735, 3026157, 3005037, 2789417, 3033137, 3044413, 4976265, 2371450, 2701823, 2968664, 2926917];
+[H,P,CI,STATS]=ttest2(CC_strs,HC_strs)%Parametric
+[P,H,STATS]=ranksum(CC_strs,HC_strs)%Non-parametric
+
+CC_strs=CC_strs'
+HC_strs=HC_strs'
+%Correlation: total number of streamlines by nodal degree
+[RHO,PVAL]=corr([HC_strs degAicha_HC_rDLPFC_sc24])%Default is Pearson, a parametric analysys
+[RHO,PVAL]=corr([CC_strs degAicha_CC_rDLPFC_sc24])
+
+[RHO,PVAL]=corr([HC_strs degAicha_HC_rDLPFC_sc24],'type','Spearman')%Non-parametric
+[RHO,PVAL]=corr([CC_strs degAicha_CC_rDLPFC_sc24],'type','Spearman')
