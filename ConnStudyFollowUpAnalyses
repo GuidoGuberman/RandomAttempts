@@ -1,28 +1,63 @@
 #!/usr/bin/env python
 #dir_path='/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/TC001/DWI/Preproc1/TC001_diff1/'
 dir_path='/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/'
-#HC_subs= [TC002 TC003 TC004 TC005 TC006 TC008 TC009 TC010 TC011 TC013 TC014 TC015 TC016 TC017 TC018 TC019 TC020 TC021 TC022 TC023 TC024 TC025 TC026 TC028 TC029 TC030 TC031 TC032 TC034 TC036 \
-#TC037 TC038 TC039 TC040 TC041 TC043 TC044 TC045 TC046 TC049 TC052 TC055 TC059 TC060 TC058 TC061]
-#CC_subs= [TC001 TC007 TC033 TC042 TC054 TC056 TC057 TC071 TC073 TC074 TC076 TC077 TC078 TC079 TC050 TC069]
-
-
+HC_subs= ['TC002', 'TC003', 'TC004', 'TC005', 'TC006', 'TC008', 'TC009', 'TC010', 'TC011', 'TC013', 'TC014', 'TC015', 'TC016', 'TC017', 'TC018', 'TC019', 'TC020', \
+'TC021', 'TC022', 'TC023', 'TC024', 'TC025', 'TC026', 'TC028', 'TC029', 'TC030', 'TC031', 'TC032', 'TC034', 'TC036', 'TC037', 'TC038', 'TC039', 'TC040', 'TC041', \
+'TC043', 'TC044', 'TC045', 'TC046', 'TC049', 'TC052', 'TC055', 'TC059', 'TC060', 'TC058', 'TC061']
+CC_subs= ['TC001', 'TC007', 'TC033', 'TC042', 'TC054', 'TC056', 'TC057', 'TC071', 'TC073', 'TC074', 'TC076', 'TC077', 'TC078', 'TC079', 'TC050', 'TC069']
+#CC_subs=['TC001']
+runs=[1]
+npv=24
+intmethod='int'
 import sys
 sys.path.append('/Users/Guido/Desktop/ResearchDiffusion/scilpy/scripts')
 print(sys.path)
 import scil_count_streamlines
+"""
 import argparse
-
 import os
-os.chdir(os.path.dirname(os.path.join(dir_path,'TC001','DWI','Preproc1','TC001_diff1')))
-os.getcwd()
+for j in range(0,len(runs)):
+    for i in range(0,len(CC_subs)):
+        diff_dir='%s_diff%d/' % (CC_subs[i],runs[j])
+        subpath=os.path.join(dir_path,CC_subs[i],'DWI','Preproc1',diff_dir)
+        os.chdir(os.path.dirname(subpath))
+        os.getcwd()
+        parser = argparse.ArgumentParser("name", description="my desc")
+        parser.add_argument("var",action="store",help="the tractogram")
+        result = parser.parse_args()
+        trkcnt=scil_count_streamlines.get_tract_count(result.var)
+        print(trkcnt)
+"""
+import os
 
+trkcnts_CC=[]
+for j in range(0,len(runs)):
+    for i in range(0,len(CC_subs)):
+        diff_dir='%s_diff%d/' % (CC_subs[i],runs[j])
+        subpath=os.path.join(dir_path,CC_subs[i],'DWI','Preproc1',diff_dir)
+        os.chdir(os.path.dirname(subpath))
+        os.getcwd()
+        trk='%s_run1_prob_pft_fodf_npv%d_%s_fc02_20-200_noloops_migrated.trk' % (CC_subs[i],npv,intmethod)
+        trkcnt_CC=scil_count_streamlines.get_tract_count(trk)
+        trkcnts_CC.append(trkcnt_CC)
+        print(trkcnt_CC)
+print(trkcnts_CC)
 
-parser = argparse.ArgumentParser("name", description="my desc")
-parser.add_argument("var",action="store",help="the tractogram")
-result = parser.parse_args()
-print(scil_count_streamlines.get_tract_count(result.var))
+trkcnts_HC=[]
+for j in range(0,len(runs)):
+    for i in range(0,len(HC_subs)):
+        diff_dir='%s_diff%d/' % (HC_subs[i],runs[j])
+        subpath=os.path.join(dir_path,HC_subs[i],'DWI','Preproc1',diff_dir)
+        os.chdir(os.path.dirname(subpath))
+        os.getcwd()
+        trk='%s_run1_prob_pft_fodf_npv%d_%s_fc02_20-200_noloops_migrated.trk' % (HC_subs[i],npv,intmethod)
+        trkcnt_HC=scil_count_streamlines.get_tract_count(trk)
+        trkcnts_HC.append(trkcnt_HC)
+        print(trkcnt_HC)
+print(trkcnts_HC)
 
-
+from scipy import stats
+print(stats.ttest_ind(trkcnts_HC,trkcnts_CC))
 
 """
 def main():

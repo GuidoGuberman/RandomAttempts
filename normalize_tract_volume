@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+#/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/ConnectivityProject
+import numpy
+import pandas
+import argparse
+
+
+def main():
+    parser = argparse.ArgumentParser("name", description="my desc")
+    parser.add_argument("volFile",action="store",help="txt file containing a list of tract volumes by subject")
+    return parser
+
+def normalize(var):
+    #Import the volume text file, and then use the subjects define therein to go get the rest of the data necessary to normalize the tract volumes    
+    return scil_count_streamlines.get_tract_count(var)
+
+print(counter(parser.var))
+
+
+if __name__ == "__main__":
+    main()
