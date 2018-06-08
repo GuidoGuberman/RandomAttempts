@@ -414,11 +414,9 @@ for i=1:size(BN_lDLPFC_splitIdx,2);
 end
 
 %Results: No significant differences.
-%% Probing the differences
-%This section needs to be run after a ProbingConnDiffs.sh script is run on
-%command line.
 
 
+%%%%%Mean diffs in streamline count%%%%%
 %AICHA rDLPFC 24 with 28; 28 with 360
 ROIs=[24 28 360];
 Mdiffs1=[];
@@ -426,9 +424,6 @@ for i=1:size(ROIs,2);
     Mdiffs1=[Mdiffs1; ROIs(1,i) nanmean(Aicha_CC_rDLPFC_sc24(2:end,find(Aicha_CC_rDLPFC_sc24(1,:)==ROIs(1,i))))-nanmean(Aicha_HC_rDLPFC_sc24(2:end,find(Aicha_HC_rDLPFC_sc24(1,:)==ROIs(1,i)))) ...
         nanmean(Aicha_CC_rDLPFC_sc28(2:end,find(Aicha_CC_rDLPFC_sc28(1,:)==ROIs(1,i))))-nanmean(Aicha_HC_rDLPFC_sc28(2:end,find(Aicha_HC_rDLPFC_sc28(1,:)==ROIs(1,i))))];
 end
-
-
-
 
 
 %AICHA lDLPFC 27 with 57
@@ -439,7 +434,6 @@ for i=1:size(ROIs,2);
 end
 
 
-
 %BN rDLPFC 22 with 246
 ROIs=[22 246];
 Mdiffs3=[];
@@ -447,7 +441,474 @@ for i=1:size(ROIs,2);
     Mdiffs3=[Mdiffs3; ROIs(1,i) nanmean(BN_CC_rDLPFC_sc22(2:end,find(BN_CC_rDLPFC_sc22(1,:)==ROIs(1,i))))-nanmean(BN_HC_rDLPFC_sc22(2:end,find(BN_HC_rDLPFC_sc22(1,:)==ROIs(1,i))))];
 end
 
+%% Probing the differences
+%This section needs to be run after a ProbingConnDiffs.sh script is run on
+%command line.
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%Extracting the data%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%UNNECESSARY IN LAB COMPUTER%%%
+cd '/Users/guigub/Downloads/ConnectivityProject/AICHA_1mm/CC_Group'%THIS PART WILL BE UNNECESSARY WHEN RUNNING ON LAB COMP
+Aicha_DLPFC_split_CC_file='ALL_CC_run1_AICHA_1mm_spConn.xlsx';
+[Aicha_DLPFC_split_CC_data, Aicha_DLPFC_split_CC_vars, Aicha_DLPFC_split_CC_raw]=xlsread(Aicha_DLPFC_split_CC_file);
+cd '/Users/guigub/Downloads/ConnectivityProject/AICHA_1mm/HC_Group'%THIS PART WILL BE UNNECESSARY WHEN RUNNING ON LAB COMP
+Aicha_DLPFC_split_HC_file='ALL_HC_run1_AICHA_1mm_spConn.xlsx';
+[Aicha_DLPFC_split_HC_data, Aicha_DLPFC_split_HC_vars, Aicha_DLPFC_split_HC_raw]=xlsread(Aicha_DLPFC_split_HC_file);
+CC_subs=unique(Aicha_DLPFC_split_CC_vars);
+HC_subs=unique(Aicha_DLPFC_split_HC_vars);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cd '/Users/guigub/Documents/Research/PhD/Project2/DLPFCConnectivityProject' %CHANGE ON LAB COMPUTER
+% cd CC_subs(1,1)]
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+cd '/Users/guigub/Downloads/ConnectivityProject/Aicha_1mm/CC_Group'
+Aicha_1mm_CC_AFD_file='All_CC_run1_AICHA_1mm_meanAFD.xlsx';
+[Aicha_1mm_CC_AFD_data, Aicha_1mm_CC_AFD_vars, Aicha_1mm_CC_AFD_raw]=xlsread(Aicha_1mm_CC_AFD_file);
+
+Aicha_1mm_CC_vol_file='All_CC_run1_AICHA_1mm_tractVolumes.xlsx';
+[Aicha_1mm_CC_vol_data, Aicha_1mm_CC_vol_vars, Aicha_1mm_CC_vol_raw]=xlsread(Aicha_1mm_CC_vol_file);
+
+Aicha_1mm_CC_FA_file='All_CC_run1_AICHA_1mm_FA.xlsx';
+[Aicha_1mm_CC_FA_data, Aicha_1mm_CC_FA_vars, Aicha_1mm_CC_FA_raw]=xlsread(Aicha_1mm_CC_FA_file);
+
+Aicha_1mm_CC_MD_file='All_CC_run1_AICHA_1mm_MD.xlsx';
+[Aicha_1mm_CC_MD_data, Aicha_1mm_CC_MD_vars, Aicha_1mm_CC_MD_raw]=xlsread(Aicha_1mm_CC_MD_file);
+
+Aicha_1mm_CC_RD_file='All_CC_run1_AICHA_1mm_RD.xlsx';
+[Aicha_1mm_CC_RD_data, Aicha_1mm_CC_RD_vars, Aicha_1mm_CC_RD_raw]=xlsread(Aicha_1mm_CC_RD_file);
+
+Aicha_1mm_CC_AD_file='All_CC_run1_AICHA_1mm_AD.xlsx';
+[Aicha_1mm_CC_AD_data, Aicha_1mm_CC_AD_vars, Aicha_1mm_CC_AD_raw]=xlsread(Aicha_1mm_CC_AD_file);
+
+
+cd '/Users/guigub/Downloads/ConnectivityProject/Aicha_1mm/HC_Group'
+Aicha_1mm_HC_AFD_file='All_HC_run1_AICHA_1mm_meanAFD.xlsx';
+[Aicha_1mm_HC_AFD_data, Aicha_1mm_HC_AFD_vars, Aicha_1mm_HC_AFD_raw]=xlsread(Aicha_1mm_HC_AFD_file);
+
+Aicha_1mm_HC_vol_file='All_HC_run1_AICHA_1mm_tractVolumes.xlsx';
+[Aicha_1mm_HC_vol_data, Aicha_1mm_HC_vol_vars, Aicha_1mm_HC_vol_raw]=xlsread(Aicha_1mm_HC_vol_file);
+
+Aicha_1mm_HC_FA_file='All_HC_run1_AICHA_1mm_FA.xlsx';
+[Aicha_1mm_HC_FA_data, Aicha_1mm_HC_FA_vars, Aicha_1mm_HC_FA_raw]=xlsread(Aicha_1mm_HC_FA_file);
+
+Aicha_1mm_HC_MD_file='All_HC_run1_AICHA_1mm_MD.xlsx';
+[Aicha_1mm_HC_MD_data, Aicha_1mm_HC_MD_vars, Aicha_1mm_HC_MD_raw]=xlsread(Aicha_1mm_HC_MD_file);
+
+Aicha_1mm_HC_RD_file='All_HC_run1_AICHA_1mm_RD.xlsx';
+[Aicha_1mm_HC_RD_data, Aicha_1mm_HC_RD_vars, Aicha_1mm_HC_RD_raw]=xlsread(Aicha_1mm_HC_RD_file);
+
+Aicha_1mm_HC_AD_file='All_HC_run1_AICHA_1mm_AD.xlsx';
+[Aicha_1mm_HC_AD_data, Aicha_1mm_HC_AD_vars, Aicha_1mm_HC_AD_raw]=xlsread(Aicha_1mm_HC_AD_file);
+
+
+cd '/Users/guigub/Downloads/ConnectivityProject/BN_Atlas_246_1mm/CC_Group'
+BN_1mm_CC_AFD_file='All_CC_run1_BN_Atlas_246_1mm_meanAFD.xlsx';
+[BN_1mm_CC_AFD_data, BN_1mm_CC_AFD_vars, BN_1mm_CC_AFD_raw]=xlsread(BN_1mm_CC_AFD_file);
+
+BN_1mm_CC_vol_file='All_CC_run1_BN_Atlas_246_1mm_tractVolumes.xlsx';
+[BN_1mm_CC_vol_data, BN_1mm_CC_vol_vars, BN_1mm_CC_vol_raw]=xlsread(BN_1mm_CC_vol_file);
+
+BN_1mm_CC_FA_file='All_CC_run1_BN_Atlas_246_1mm_FA.xlsx';
+[BN_1mm_CC_FA_data, BN_1mm_CC_FA_vars, BN_1mm_CC_FA_raw]=xlsread(BN_1mm_CC_FA_file);
+
+BN_1mm_CC_MD_file='All_CC_run1_BN_Atlas_246_1mm_MD.xlsx';
+[BN_1mm_CC_MD_data, BN_1mm_CC_MD_vars, BN_1mm_CC_MD_raw]=xlsread(BN_1mm_CC_MD_file);
+
+BN_1mm_CC_RD_file='All_CC_run1_BN_Atlas_246_1mm_RD.xlsx';
+[BN_1mm_CC_RD_data, BN_1mm_CC_RD_vars, BN_1mm_CC_RD_raw]=xlsread(BN_1mm_CC_RD_file);
+
+BN_1mm_CC_AD_file='All_CC_run1_BN_Atlas_246_1mm_AD.xlsx';
+[BN_1mm_CC_AD_data, BN_1mm_CC_AD_vars, BN_1mm_CC_AD_raw]=xlsread(BN_1mm_CC_AD_file);
+
+cd '/Users/guigub/Downloads/ConnectivityProject/BN_Atlas_246_1mm/HC_Group'
+BN_1mm_HC_AFD_file='All_HC_run1_BN_Atlas_246_1mm_meanAFD.xlsx';
+[BN_1mm_HC_AFD_data, BN_1mm_HC_AFD_vars, BN_1mm_HC_AFD_raw]=xlsread(BN_1mm_HC_AFD_file);
+
+BN_1mm_HC_vol_file='All_HC_run1_BN_Atlas_246_1mm_tractVolumes.xlsx';
+[BN_1mm_HC_vol_data, BN_1mm_HC_vol_vars, BN_1mm_HC_vol_raw]=xlsread(BN_1mm_HC_vol_file);
+
+BN_1mm_HC_FA_file='All_HC_run1_BN_Atlas_246_1mm_FA.xlsx';
+[BN_1mm_HC_FA_data, BN_1mm_HC_FA_vars, BN_1mm_HC_FA_raw]=xlsread(BN_1mm_HC_FA_file);
+
+BN_1mm_HC_MD_file='All_HC_run1_BN_Atlas_246_1mm_MD.xlsx';
+[BN_1mm_HC_MD_data, BN_1mm_HC_MD_vars, BN_1mm_HC_MD_raw]=xlsread(BN_1mm_HC_MD_file);
+
+BN_1mm_HC_RD_file='All_HC_run1_BN_Atlas_246_1mm_RD.xlsx';
+[BN_1mm_HC_RD_data, BN_1mm_HC_RD_vars, BN_1mm_HC_RD_raw]=xlsread(BN_1mm_HC_RD_file);
+
+BN_1mm_HC_AD_file='All_HC_run1_BN_Atlas_246_1mm_AD.xlsx';
+[BN_1mm_HC_AD_data, BN_1mm_HC_AD_vars, BN_1mm_HC_AD_raw]=xlsread(BN_1mm_HC_AD_file);
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%AFD
+% %AICHA 24-28
+% AICHA_CC_24_28_AFD_data=[];
+% ROIpair=['24_28'];
+% ROIidx=1;
+% for i=1:size(CC_subs,1);
+%     AICHA_CC_24_28_AFD_data=[AICHA_CC_24_28_AFD_data;Aicha_1mm_CC_AFD_data(find(strcmp(Aicha_1mm_CC_AFD_vars(:,1), ...
+%         CC_subs(i,1))==1 & strcmp(Aicha_1mm_CC_AFD_vars(:,2),ROIpair)==1),ROIidx)];
+% end
+% 
+% AICHA_HC_24_28_AFD_data=[];
+% ROIpair=['24_28'];
+% for i=1:size(HC_subs,1);
+%     AICHA_HC_24_28_AFD_data=[AICHA_HC_24_28_AFD_data;Aicha_1mm_HC_AFD_data(find(strcmp(Aicha_1mm_HC_AFD_vars(:,1), ...
+%         HC_subs(i,1))==1 & strcmp(Aicha_1mm_HC_AFD_vars(:,2),ROIpair)==1),ROIidx)];
+% end
+% 
+% % [P1,H1]=ranksum(AICHA_HC_24_28_AFD_data,AICHA_CC_24_28_AFD_data)
+% [H1,P1]=ttest2(AICHA_HC_24_28_AFD_data,AICHA_CC_24_28_AFD_data)
+% 
+% %AICHA 28_360
+% AICHA_CC_28_360_AFD_data=[];
+% ROIpair=['28_360'];
+% ROIidx=3;
+% for i=1:size(CC_subs,1);
+%     AICHA_CC_28_360_AFD_data=[AICHA_CC_28_360_AFD_data;Aicha_1mm_CC_AFD_data(find(strcmp(Aicha_1mm_CC_AFD_vars(:,1), ...
+%         CC_subs(i,1))==1 & strcmp(Aicha_1mm_CC_AFD_vars(:,2),ROIpair)==1),ROIidx)];
+% end
+% 
+% AICHA_HC_28_360_AFD_data=[];
+% ROIpair=['28_360'];
+% for i=1:size(HC_subs,1);
+%     AICHA_HC_28_360_AFD_data=[AICHA_HC_28_360_AFD_data;Aicha_1mm_HC_AFD_data(find(strcmp(Aicha_1mm_HC_AFD_vars(:,1), ...
+%         HC_subs(i,1))==1 & strcmp(Aicha_1mm_HC_AFD_vars(:,2),ROIpair)==1),ROIidx)];
+% end
+% 
+% % [P2,H2]=ranksum(AICHA_HC_28_360_AFD_data,AICHA_CC_28_360_AFD_data)
+% [H2,P2]=ttest2(AICHA_HC_28_360_AFD_data,AICHA_CC_28_360_AFD_data)
+% 
+% 
+% %AICHA 27_57
+% AICHA_CC_27_57_AFD_data=[];
+% ROIpair=['27_57'];
+% ROIidx=4;
+% for i=1:size(CC_subs,1);
+%     AICHA_CC_27_57_AFD_data=[AICHA_CC_27_57_AFD_data;Aicha_1mm_CC_AFD_data(find(strcmp(Aicha_1mm_CC_AFD_vars(:,1), ...
+%         CC_subs(i,1))==1 & strcmp(Aicha_1mm_CC_AFD_vars(:,2),ROIpair)==1),ROIidx)];
+% end
+% 
+% AICHA_HC_27_57_AFD_data=[];
+% ROIpair=['27_57'];
+% for i=1:size(HC_subs,1);
+%     AICHA_HC_27_57_AFD_data=[AICHA_HC_27_57_AFD_data;Aicha_1mm_HC_AFD_data(find(strcmp(Aicha_1mm_HC_AFD_vars(:,1), ...
+%         HC_subs(i,1))==1 & strcmp(Aicha_1mm_HC_AFD_vars(:,2),ROIpair)==1),ROIidx)];
+% end
+% 
+% % [P3,H3]=ranksum(AICHA_HC_27_57_AFD_data,AICHA_CC_27_57_AFD_data)
+% [H3,P3]=ttest2(AICHA_HC_27_57_AFD_data,AICHA_CC_27_57_AFD_data)
+
+
+
+%Mean AFD
+%24_28
+ROIidx=1;
+AICHA_CC_24_28_AFD_data=Aicha_1mm_CC_AFD_data(:,ROIidx);
+
+AICHA_HC_24_28_AFD_data=Aicha_1mm_HC_AFD_data(:,ROIidx);
+
+[P1,H1]=ranksum(AICHA_CC_24_28_AFD_data,AICHA_HC_24_28_AFD_data)
+[tH1,tP1]=ttest2(AICHA_CC_24_28_AFD_data,AICHA_HC_24_28_AFD_data)
+
+%28_360
+ROIidx=11;
+AICHA_CC_28_360_AFD_data=Aicha_1mm_CC_AFD_data(:,ROIidx);
+
+AICHA_HC_28_360_AFD_data=Aicha_1mm_HC_AFD_data(:,ROIidx);
+
+[P2,H2]=ranksum(AICHA_CC_28_360_AFD_data,AICHA_HC_28_360_AFD_data)
+[tH2,tP2]=ttest2(AICHA_CC_28_360_AFD_data,AICHA_HC_28_360_AFD_data)
+
+
+%27_57
+ROIidx=16;
+AICHA_CC_27_57_AFD_data=Aicha_1mm_CC_AFD_data(:,ROIidx);
+
+AICHA_HC_27_57_AFD_data=Aicha_1mm_HC_AFD_data(:,ROIidx);
+
+[P3,H3]=ranksum(AICHA_CC_27_57_AFD_data,AICHA_HC_27_57_AFD_data)
+[tH3,tP3]=ttest2(AICHA_CC_27_57_AFD_data,AICHA_HC_27_57_AFD_data)
+
+
+
+
+
+
+%Tract Volume
+%AICHA 24-28
+AICHA_CC_24_28_vol_data=[];
+ROIpair=['24_28'];
+ROIidx=1;
+for i=1:size(CC_subs,1);
+    AICHA_CC_24_28_vol_data=[AICHA_CC_24_28_vol_data;Aicha_1mm_CC_vol_data(find(strcmp(Aicha_1mm_CC_vol_vars(:,1), ...
+        CC_subs(i,1))==1 & strcmp(Aicha_1mm_CC_vol_vars(:,2),ROIpair)==1),ROIidx)];
+end
+
+AICHA_HC_24_28_vol_data=[];
+ROIpair=['24_28'];
+for i=1:size(HC_subs,1);
+    AICHA_HC_24_28_vol_data=[AICHA_HC_24_28_vol_data;Aicha_1mm_HC_vol_data(find(strcmp(Aicha_1mm_HC_vol_vars(:,1), ...
+        HC_subs(i,1))==1 & strcmp(Aicha_1mm_HC_vol_vars(:,2),ROIpair)==1),ROIidx)];
+end
+
+[P4,H4]=ranksum(AICHA_HC_24_28_vol_data,AICHA_CC_24_28_vol_data)
+[tH4,tP4]=ttest2(AICHA_HC_24_28_vol_data,AICHA_CC_24_28_vol_data)
+
+%AICHA 28_360
+AICHA_CC_28_360_vol_data=[];
+ROIpair=['28_360'];
+ROIidx=3;
+for i=1:size(CC_subs,1);
+    AICHA_CC_28_360_vol_data=[AICHA_CC_28_360_vol_data;Aicha_1mm_CC_vol_data(find(strcmp(Aicha_1mm_CC_vol_vars(:,1), ...
+        CC_subs(i,1))==1 & strcmp(Aicha_1mm_CC_vol_vars(:,2),ROIpair)==1),ROIidx)];
+end
+
+AICHA_HC_28_360_vol_data=[];
+ROIpair=['28_360'];
+for i=1:size(HC_subs,1);
+    AICHA_HC_28_360_vol_data=[AICHA_HC_28_360_vol_data;Aicha_1mm_HC_vol_data(find(strcmp(Aicha_1mm_HC_vol_vars(:,1), ...
+        HC_subs(i,1))==1 & strcmp(Aicha_1mm_HC_vol_vars(:,2),ROIpair)==1),ROIidx)];
+end
+
+[P5,H5]=ranksum(AICHA_HC_28_360_vol_data,AICHA_CC_28_360_vol_data)
+[tH5,tP5]=ttest2(AICHA_HC_28_360_vol_data,AICHA_CC_28_360_vol_data)
+
+
+%AICHA 27_57
+AICHA_CC_27_57_vol_data=[];
+ROIpair=['27_57'];
+ROIidx=4;
+for i=1:size(CC_subs,1);
+    AICHA_CC_27_57_vol_data=[AICHA_CC_27_57_vol_data;Aicha_1mm_CC_vol_data(find(strcmp(Aicha_1mm_CC_vol_vars(:,1), ...
+        CC_subs(i,1))==1 & strcmp(Aicha_1mm_CC_vol_vars(:,2),ROIpair)==1),ROIidx)];
+end
+
+AICHA_HC_27_57_vol_data=[];
+ROIpair=['27_57'];
+for i=1:size(HC_subs,1);
+    AICHA_HC_27_57_vol_data=[AICHA_HC_27_57_vol_data;Aicha_1mm_HC_vol_data(find(strcmp(Aicha_1mm_HC_vol_vars(:,1), ...
+        HC_subs(i,1))==1 & strcmp(Aicha_1mm_HC_vol_vars(:,2),ROIpair)==1),ROIidx)];
+end
+
+[P6,H6]=ranksum(AICHA_HC_27_57_vol_data,AICHA_CC_27_57_vol_data)
+[tH6,tP6]=ttest2(AICHA_HC_27_57_vol_data,AICHA_CC_27_57_vol_data)
+
+%FA
+%24_28
+ROIidx=1;
+AICHA_CC_24_28_FA_data=Aicha_1mm_CC_FA_data(:,ROIidx);
+
+AICHA_HC_24_28_FA_data=Aicha_1mm_HC_FA_data(:,ROIidx);
+
+[P7,H7]=ranksum(AICHA_CC_24_28_FA_data,AICHA_HC_24_28_FA_data)
+[tH7,tP7]=ttest2(AICHA_CC_24_28_FA_data,AICHA_HC_24_28_FA_data)
+
+%28_360
+ROIidx=11;
+AICHA_CC_28_360_FA_data=Aicha_1mm_CC_FA_data(:,ROIidx);
+
+AICHA_HC_28_360_FA_data=Aicha_1mm_HC_FA_data(:,ROIidx);
+
+[P8,H8]=ranksum(AICHA_CC_28_360_FA_data,AICHA_HC_28_360_FA_data)
+[tH8,tP8]=ttest2(AICHA_CC_28_360_FA_data,AICHA_HC_28_360_FA_data)
+
+
+%27_57
+ROIidx=16;
+AICHA_CC_27_57_FA_data=Aicha_1mm_CC_FA_data(:,ROIidx);
+
+AICHA_HC_27_57_FA_data=Aicha_1mm_HC_FA_data(:,ROIidx);
+
+[P9,H9]=ranksum(AICHA_CC_27_57_FA_data,AICHA_HC_27_57_FA_data)
+[tH9,tP9]=ttest2(AICHA_CC_27_57_FA_data,AICHA_HC_27_57_FA_data)
+
+%MD
+%24_28
+ROIidx=1;
+AICHA_CC_24_28_MD_data=Aicha_1mm_CC_MD_data(:,ROIidx);
+
+AICHA_HC_24_28_MD_data=Aicha_1mm_HC_MD_data(:,ROIidx);
+
+[P10,H10]=ranksum(AICHA_CC_24_28_MD_data,AICHA_HC_24_28_MD_data)
+[tH10,tP10]=ttest2(AICHA_CC_24_28_MD_data,AICHA_HC_24_28_MD_data)
+
+%28_360
+ROIidx=11;
+AICHA_CC_28_360_MD_data=Aicha_1mm_CC_MD_data(:,ROIidx);
+
+AICHA_HC_28_360_MD_data=Aicha_1mm_HC_MD_data(:,ROIidx);
+
+[P11,H11]=ranksum(AICHA_CC_28_360_MD_data,AICHA_HC_28_360_MD_data)
+[tH11,tP11]=ttest2(AICHA_CC_28_360_MD_data,AICHA_HC_28_360_MD_data)
+
+%27_57
+ROIidx=16;
+AICHA_CC_27_57_MD_data=Aicha_1mm_CC_MD_data(:,ROIidx);
+
+AICHA_HC_27_57_MD_data=Aicha_1mm_HC_MD_data(:,ROIidx);
+
+[P12,H12]=ranksum(AICHA_CC_27_57_MD_data,AICHA_HC_27_57_MD_data)
+[tH12,tP12]=ttest2(AICHA_CC_27_57_MD_data,AICHA_HC_27_57_MD_data)
+
+
+
+%RD
+%24_28
+ROIidx=1;
+AICHA_CC_24_28_RD_data=Aicha_1mm_CC_RD_data(:,ROIidx);
+
+AICHA_HC_24_28_RD_data=Aicha_1mm_HC_RD_data(:,ROIidx);
+
+[P13,H13]=ranksum(AICHA_CC_24_28_RD_data,AICHA_HC_24_28_RD_data)
+[tH13,tP13]=ttest2(AICHA_CC_24_28_RD_data,AICHA_HC_24_28_RD_data)
+
+%28_360
+ROIidx=11;
+AICHA_CC_28_360_RD_data=Aicha_1mm_CC_RD_data(:,ROIidx);
+
+AICHA_HC_28_360_RD_data=Aicha_1mm_HC_RD_data(:,ROIidx);
+
+[P14,H14]=ranksum(AICHA_CC_28_360_RD_data,AICHA_HC_28_360_RD_data)
+[tH14,tP14]=ttest2(AICHA_CC_28_360_RD_data,AICHA_HC_28_360_RD_data)
+
+%27_57
+ROIidx=16;
+AICHA_CC_27_57_RD_data=Aicha_1mm_CC_RD_data(:,ROIidx);
+
+AICHA_HC_27_57_RD_data=Aicha_1mm_HC_RD_data(:,ROIidx);
+
+[P15,H15]=ranksum(AICHA_CC_27_57_RD_data,AICHA_HC_27_57_RD_data)
+[tH15,tP15]=ttest2(AICHA_CC_27_57_RD_data,AICHA_HC_27_57_RD_data)
+
+
+
+%AD
+%24_28
+ROIidx=1;
+AICHA_CC_24_28_AD_data=Aicha_1mm_CC_AD_data(:,ROIidx);
+
+AICHA_HC_24_28_AD_data=Aicha_1mm_HC_AD_data(:,ROIidx);
+
+[P16,H16]=ranksum(AICHA_CC_24_28_AD_data,AICHA_HC_24_28_AD_data)
+[tH16,tP16]=ttest2(AICHA_CC_24_28_AD_data,AICHA_HC_24_28_AD_data)
+
+%28_360
+ROIidx=11;
+AICHA_CC_28_360_AD_data=Aicha_1mm_CC_AD_data(:,ROIidx);
+
+AICHA_HC_28_360_AD_data=Aicha_1mm_HC_AD_data(:,ROIidx);
+
+[P17,H17]=ranksum(AICHA_CC_28_360_AD_data,AICHA_HC_28_360_AD_data)
+[tH17,tP17]=ttest2(AICHA_CC_28_360_AD_data,AICHA_HC_28_360_AD_data)
+
+%27_57
+ROIidx=16;
+AICHA_CC_27_57_AD_data=Aicha_1mm_CC_AD_data(:,ROIidx);
+
+AICHA_HC_27_57_AD_data=Aicha_1mm_HC_AD_data(:,ROIidx);
+
+[P18,H18]=ranksum(AICHA_CC_27_57_AD_data,AICHA_HC_27_57_AD_data)
+[tH18,tP18]=ttest2(AICHA_CC_27_57_AD_data,AICHA_HC_27_57_AD_data)
+
+
+
+
+
+% %AFD
+% %BN 22_246
+% BN_CC_22_246_AFD_data=[];
+% ROIpair=['22_246'];
+% ROIidx=1;
+% for i=1:size(CC_subs,1);
+%     BN_CC_22_246_AFD_data=[BN_CC_22_246_AFD_data;BN_1mm_CC_AFD_data(find(strcmp(BN_1mm_CC_AFD_vars(:,1), ...
+%         CC_subs(i,1))==1 & strcmp(BN_1mm_CC_AFD_vars(:,2),ROIpair)==1),ROIidx)];
+% end
+% 
+% 
+% 
+% BN_HC_22_246_AFD_data=[];
+% ROIpair=['22_246'];
+% for i=1:size(HC_subs,1);
+%     BN_HC_22_246_AFD_data=[BN_HC_22_246_AFD_data;BN_1mm_HC_AFD_data(find(strcmp(BN_1mm_HC_AFD_vars(:,1), ...
+%         HC_subs(i,1))==1 & strcmp(BN_1mm_HC_AFD_vars(:,2),ROIpair)==1),ROIidx)];
+% end
+% 
+% % [P19,H19]=ranksum(BN_HC_22_246_AFD_data,BN_CC_22_246_AFD_data)
+% [H19,P19]=ttest2(BN_HC_22_246_AFD_data,BN_CC_22_246_AFD_data)
+
+
+%AFD
+%BN 22_246
+ROIidx=1;
+BN_CC_22_246_AFD_data=BN_1mm_CC_AFD_data(:,ROIidx);
+BN_HC_22_246_AFD_data=BN_1mm_HC_AFD_data(:,ROIidx);
+[P19,H19]=ranksum(BN_HC_22_246_AFD_data,BN_CC_22_246_AFD_data)
+[tH19,tP19]=ttest2(BN_HC_22_246_AFD_data,BN_CC_22_246_AFD_data)
+
+
+
+%Tract Volume
+%BN 22_246
+BN_CC_22_246_vol_data=[];
+ROIpair=['22_246'];
+ROIidx=1;
+for i=1:size(CC_subs,1);
+    BN_CC_22_246_vol_data=[BN_CC_22_246_vol_data;BN_1mm_CC_vol_data(find(strcmp(BN_1mm_CC_vol_vars(:,1), ...
+        CC_subs(i,1))==1 & strcmp(BN_1mm_CC_vol_vars(:,2),ROIpair)==1),ROIidx)];
+end
+
+BN_HC_22_246_vol_data=[];
+ROIpair=['22_246'];
+for i=1:size(HC_subs,1);
+    BN_HC_22_246_vol_data=[BN_HC_22_246_vol_data;BN_1mm_HC_vol_data(find(strcmp(BN_1mm_HC_vol_vars(:,1), ...
+        HC_subs(i,1))==1 & strcmp(BN_1mm_HC_vol_vars(:,2),ROIpair)==1),ROIidx)];
+end
+
+[P20,H20]=ranksum(BN_HC_22_246_vol_data,BN_CC_22_246_vol_data)
+[tH20,tP20]=ttest2(BN_HC_22_246_vol_data,BN_CC_22_246_vol_data)
+
+
+%FA
+%BN 22_246
+ROIidx=1;
+BN_CC_22_246_FA_data=BN_1mm_CC_FA_data(:,ROIidx);
+BN_HC_22_246_FA_data=BN_1mm_HC_FA_data(:,ROIidx);
+[P21,H21]=ranksum(BN_HC_22_246_FA_data,BN_CC_22_246_FA_data)
+[tH21,tP21]=ttest2(BN_HC_22_246_FA_data,BN_CC_22_246_FA_data)
+
+%MD
+%BN 22_246
+ROIidx=1;
+BN_CC_22_246_MD_data=BN_1mm_CC_MD_data(:,ROIidx);
+BN_HC_22_246_MD_data=BN_1mm_HC_MD_data(:,ROIidx);
+[P22,H22]=ranksum(BN_HC_22_246_MD_data,BN_CC_22_246_MD_data)
+[tH22,tP22]=ttest2(BN_HC_22_246_MD_data,BN_CC_22_246_MD_data)
+
+%RD
+%BN 22_246
+ROIidx=1;
+BN_CC_22_246_RD_data=BN_1mm_CC_RD_data(:,ROIidx);
+BN_HC_22_246_RD_data=BN_1mm_HC_RD_data(:,ROIidx);
+[P23,H23]=ranksum(BN_HC_22_246_RD_data,BN_CC_22_246_RD_data)
+[tH23,tP23]=ttest2(BN_HC_22_246_RD_data,BN_CC_22_246_RD_data)
+
+%AD
+%BN 22_246
+ROIidx=1;
+BN_CC_22_246_AD_data=BN_1mm_CC_AD_data(:,ROIidx);
+BN_HC_22_246_AD_data=BN_1mm_HC_AD_data(:,ROIidx);
+[P24,H24]=ranksum(BN_HC_22_246_AD_data,BN_CC_22_246_AD_data)
+[tH24,tP24]=ttest2(BN_HC_22_246_AD_data,BN_CC_22_246_AD_data)
+
+
+
+Results=[H1 H2 H3 H4 H5 H6 H7 H8 H9 H10 H11 H12 H13 H14 H15 H16 H17 H18 H19 H20 H21 H22 H23 H24;...
+    P1 P2 P3 P4 P5 P6 P7 P8 P9 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 P20 P21 P22 P23 P24]
+
+tResults=[tH1 tH2 tH3 tH4 tH5 tH6 tH7 tH8 tH9 tH10 tH11 tH12 tH13 tH14 tH15 tH16 tH17 tH18 tH19 tH20 tH21 tH22 tH23 tH24;...
+    tP1 tP2 tP3 tP4 tP5 tP6 tP7 tP8 tP9 tP10 tP11 tP12 tP13 tP14 tP15 tP16 tP17 tP18 tP19 tP20 tP21 tP22 tP23 tP24]
 
 
 %% Labelling the results
