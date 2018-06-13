@@ -4,7 +4,21 @@
 import numpy
 import pandas
 import argparse
+import sys
+sys.path.append('/Users/Guido/Desktop/ResearchDiffusion/scilpy/scripts')
+print(sys.path)
+import scil_count_non_zero_voxels
 
+
+from os import getcwd
+from os import chdir
+
+
+import csv
+
+chdir('/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/ConnectivityProject/AICHA_1mm/CC_Group/')
+import numpy as np
+file=np.genfromtxt('All_CC_run1_AICHA_1mm_tractVolumes.txt',dtype='string')
 
 def main():
     parser = argparse.ArgumentParser("name", description="my desc")
@@ -12,7 +26,7 @@ def main():
     return parser
 
 def normalize(var):
-    #Import the volume text file, and then use the subjects define therein to go get the rest of the data necessary to normalize the tract volumes    
+    #Import the volume text file, and then use the subjects define therein to go get the rest of the data necessary to normalize the tract volumes
     return scil_count_streamlines.get_tract_count(var)
 
 print(counter(parser.var))
