@@ -41,14 +41,16 @@ do
 
 		for parc in "${parcs[@]}"
 		do
-			echo "Transforming parcellation $parc to native DWI space, subject $nummni run $numrun"
-			rm "$nummni"_"$parc"_in_dwi"$numrun".nii
-			antsApplyTransforms -d 3 -r ../../../"$nummni"_b0c_"$numrun"_1x1x1.nii -t [../"$nummni"_MNI2DWI"$numrun"_0GenericAffine.mat,0] -n MultiLabel -i $ROI_DIR/"$parc".nii* -o "$nummni"_"$parc"_in_dwi"$numrun".nii -v 1
+			#echo "Transforming parcellation $parc to native DWI space, subject $nummni run $numrun"
+			#rm "$nummni"_"$parc"_in_dwi"$numrun".nii
+			#antsApplyTransforms -d 3 -r ../../../"$nummni"_b0c_"$numrun"_1x1x1.nii -t [../"$nummni"_MNI2DWI"$numrun"_0GenericAffine.mat,0] -n MultiLabel -i $ROI_DIR/"$parc".nii* -o "$nummni"_"$parc"_in_dwi"$numrun".nii -v 1
 
-			echo "Computing whole-rain connectivity for subject $nummni run $numrun based on parcellation $parc"
-			scil_compute_robust_connectivity_matrix.py ../../"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated.trk "$nummni"_"$parc"_in_dwi"$numrun".nii "$nummni"_run"$numrun"_"$parc"_ConnMat_norm.csv --no_self_connection --normalize --tp trackvis -f
-			scil_compute_robust_connectivity_matrix.py ../../"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated.trk "$nummni"_"$parc"_in_dwi"$numrun".nii "$nummni"_run"$numrun"_"$parc"_ConnMat.csv --no_self_connection --tp trackvis -f
-
+			echo "Computing whole-brain connectivity for subject $nummni run $numrun based on parcellation $parc"
+			cd "$nummni"_"$numrun"_FollowUpAnalyses
+			#scil_compute_robust_connectivity_matrix.py ../../"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated.trk "$nummni"_"$parc"_in_dwi"$numrun".nii "$nummni"_run"$numrun"_"$parc"_ConnMat_norm.csv --no_self_connection --normalize --tp trackvis -f
+			#scil_compute_robust_connectivity_matrix.py ../../"$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated.trk "$nummni"_"$parc"_in_dwi"$numrun".nii "$nummni"_run"$numrun"_"$parc"_ConnMat.csv --no_self_connection --tp trackvis -f
+			scil_compute_robust_connectivity_matrix.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_noCerebellum.trk ../"$nummni"_"$parc"_in_dwi"$numrun".nii "$nummni"_run"$numrun"_"$parc"_noCerebellum_ConnMat_norm.csv --no_self_connection --normalize --tp trackvis -f
+			scil_compute_robust_connectivity_matrix.py "$nummni"_run"$numrun"_prob_pft_fodf_npv"$npv"_"$seeding_method"_fc02_20-200_noloops_migrated_noCerebellum.trk ../"$nummni"_"$parc"_in_dwi"$numrun".nii "$nummni"_run"$numrun"_"$parc"_noCerebellum_ConnMat.csv --no_self_connection --tp trackvis -f
 		done
 	done
 done

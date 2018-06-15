@@ -2,7 +2,9 @@ START_DIR=/Users/Guido/Documents/Analyses/subjects/PedsData/MNI
 
 cd $START_DIR
 
-mkdir ConnectivityProject
+#mkdir ConnectivityProject
+cd ConnectivityProject
+mkdir NoCerebellum_FollowUpAnalyses
 grp1=(CC)
 grp2=(HC)
 grps=(CC HC)
@@ -16,7 +18,7 @@ parcs3=(BN_Atlas_246_1mm)
 #parcs=(Aicha_with_DLPFC Brainnetome_with_DLPFC AICHA_1mm BN_Atlas_246_1mm)
 parcs=(AICHA_1mm BN_Atlas_246_1mm)
 #parc1RNs=(1 21 22)
-parc2RNs=(1 20 21 22 23 24 25 26 27 28 29)#Note: 1 is the labels row. The numbers here are the row where the ROIs are found, not the actual label numbers of the ROI.
+parc2RNs=(1 20 21 22 23 24 25 26 27 28 29)
 parc3RNs=(1 16 17 20 21 22 23)
 #parc4RNs=(1 19 20)
 #####################################################################ALL VARIABLES ABOVE ARE MODIFIABLE#####################################################
@@ -66,39 +68,69 @@ do
 
 			for parc in "${parcs2[@]}"
 			do
-				mkdir $START_DIR/ConnectivityProject/"$parc"
-				cd $START_DIR/ConnectivityProject/"$parc"
+				#mkdir $START_DIR/ConnectivityProject/"$parc"
+				#cd $START_DIR/ConnectivityProject/"$parc"
+
+				mkdir $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"
+				cd $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"
+
 				mkdir "$grp"_Group
 
-				cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
-				rm "$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
+				#rm "$nummni"_run"$numrun"_"$parc"_spConn.txt
+
+				cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_"$numrun"_FollowUpAnalyses
+				rm "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
 
 				for parcRN in "${parc2RNs[@]}"
 				do
-					rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
-					echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+					#rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+					#echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+
+					rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN"_noCerebellum.txt
+					echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_noCerebellum_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN"_noCerebellum.txt
+
+
+
 				done
-				cat "$nummni"_run"$numrun"_"$parc"_spConntmp*.txt > "$nummni"_run"$numrun"_"$parc"_spConn.txt
-				cp "$nummni"_run"$numrun"_"$parc"_spConn.txt $START_DIR/ConnectivityProject/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cat "$nummni"_run"$numrun"_"$parc"_spConntmp*.txt > "$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cp "$nummni"_run"$numrun"_"$parc"_spConn.txt $START_DIR/ConnectivityProject/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn.txt
+
+				cat "$nummni"_run"$numrun"_"$parc"_spConntmp*_noCerebellum.txt > "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
+				cp "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
 			done
 
 
 			for parc in "${parcs3[@]}"
 			do
-				mkdir $START_DIR/ConnectivityProject/"$parc"
-				cd $START_DIR/ConnectivityProject/"$parc"
+				#mkdir $START_DIR/ConnectivityProject/"$parc"
+				#cd $START_DIR/ConnectivityProject/"$parc"
+
+				mkdir $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"
+				cd $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"
+
 				mkdir "$grp"_Group
 
-				cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
-				rm "$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
+				#rm "$nummni"_run"$numrun"_"$parc"_spConn.txt
+
+				cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_"$numrun"_FollowUpAnalyses
+				rm "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
 
 				for parcRN in "${parc3RNs[@]}"
 				do
-					rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
-					echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+					#rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+					#echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+
+					rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN"0_noCerebellum.txt
+					echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_noCerebellum_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN"0_noCerebellum.txt
+
 				done
-				cat "$nummni"_run"$numrun"_"$parc"_spConntmp*.txt > "$nummni"_run"$numrun"_"$parc"_spConn.txt
-				cp "$nummni"_run"$numrun"_"$parc"_spConn.txt $START_DIR/ConnectivityProject/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cat "$nummni"_run"$numrun"_"$parc"_spConntmp*.txt > "$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cp "$nummni"_run"$numrun"_"$parc"_spConn.txt $START_DIR/ConnectivityProject/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn.txt
+
+				cat "$nummni"_run"$numrun"_"$parc"_spConntmp*_noCerebellum.txt > "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
+				cp "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
 			done
 		done
 	done
@@ -152,39 +184,67 @@ do
 
 			for parc in "${parcs2[@]}"
 			do
-				mkdir $START_DIR/ConnectivityProject/"$parc"
-				cd $START_DIR/ConnectivityProject/"$parc"
+				#mkdir $START_DIR/ConnectivityProject/"$parc"
+				#cd $START_DIR/ConnectivityProject/"$parc"
+
+				mkdir $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"
+				cd $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"
+
 				mkdir "$grp"_Group
 
-				cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
-				rm "$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
+				#rm "$nummni"_run"$numrun"_"$parc"_spConn.txt
+
+
+				cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_"$numrun"_FollowUpAnalyses
+				rm "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
 
 				for parcRN in "${parc2RNs[@]}"
 				do
-					rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
-					echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+					#rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+					#echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+
+					rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN"_noCerebellum.txt
+					echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_noCerebellum_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN"_noCerebellum.txt
 				done
-				cat "$nummni"_run"$numrun"_"$parc"_spConntmp*.txt > "$nummni"_run"$numrun"_"$parc"_spConn.txt
-				cp "$nummni"_run"$numrun"_"$parc"_spConn.txt $START_DIR/ConnectivityProject/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cat "$nummni"_run"$numrun"_"$parc"_spConntmp*.txt > "$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cp "$nummni"_run"$numrun"_"$parc"_spConn.txt $START_DIR/ConnectivityProject/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
+
+				cat "$nummni"_run"$numrun"_"$parc"_spConntmp*_noCerebellum.txt > "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
+				cp "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
 			done
 
 
 			for parc in "${parcs3[@]}"
 			do
-				mkdir $START_DIR/ConnectivityProject/"$parc"
-				cd $START_DIR/ConnectivityProject/"$parc"
+				#mkdir $START_DIR/ConnectivityProject/"$parc"
+				#cd $START_DIR/ConnectivityProject/"$parc"
+
+				mkdir $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"
+				cd $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"
+
 				mkdir "$grp"_Group
 
-				cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
-				rm "$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject
+				#rm "$nummni"_run"$numrun"_"$parc"_spConn.txt
+
+				cd $START_DIR/"$nummni"/DWI/Preproc1/"$nummni"_diff"$numrun"/"$nummni"_"$numrun"_ROIs/"$nummni"_"$numrun"_ConnectivityProject/"$nummni"_"$numrun"_FollowUpAnalyses
+				rm "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
 
 				for parcRN in "${parc3RNs[@]}"
 				do
-					rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
-					echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+					#rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+					#echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN".txt
+
+					rm "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN"0_noCerebellum.txt
+					echo "$nummni" `awk "NR==$parcRN {print}" "$nummni"_run"$numrun"_"$parc"_noCerebellum_ConnMat_norm.csv` > "$nummni"_run"$numrun"_"$parc"_spConntmp"$parcRN"0_noCerebellum.txt
+
 				done
-				cat "$nummni"_run"$numrun"_"$parc"_spConntmp*.txt > "$nummni"_run"$numrun"_"$parc"_spConn.txt
-				cp "$nummni"_run"$numrun"_"$parc"_spConn.txt $START_DIR/ConnectivityProject/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cat "$nummni"_run"$numrun"_"$parc"_spConntmp*.txt > "$nummni"_run"$numrun"_"$parc"_spConn.txt
+				#cp "$nummni"_run"$numrun"_"$parc"_spConn.txt $START_DIR/ConnectivityProject/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn.txt
+
+				cat "$nummni"_run"$numrun"_"$parc"_spConntmp*_noCerebellum.txt > "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
+				cp "$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"/"$grp"_Group/"$nummni"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
 			done
 		done
 	done
@@ -196,9 +256,14 @@ do
 	do
 		for grp in "${grps[@]}"
 		do
-			cd $START_DIR/ConnectivityProject/"$parc"/"$grp"_Group/
-			rm ALL_"$grp"_run"$numrun"_"$parc"_spConn.txt
-			cat *_run"$numrun"_"$parc"_spConn.txt > ALL_"$grp"_run"$numrun"_"$parc"_spConn.txt
+			#cd $START_DIR/ConnectivityProject/"$parc"/"$grp"_Group/
+			#rm ALL_"$grp"_run"$numrun"_"$parc"_spConn.txt
+			#cat *_run"$numrun"_"$parc"_spConn.txt > ALL_"$grp"_run"$numrun"_"$parc"_spConn.txt
+
+			cd $START_DIR/ConnectivityProject/NoCerebellum_FollowUpAnalyses/"$parc"/"$grp"_Group/
+			rm ALL_"$grp"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
+			cat *_run"$numrun"_"$parc"_spConn_noCerebellum.txt > ALL_"$grp"_run"$numrun"_"$parc"_spConn_noCerebellum.txt
+
 		done
 	done
 done

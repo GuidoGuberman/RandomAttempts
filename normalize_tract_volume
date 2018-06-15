@@ -4,22 +4,75 @@
 import numpy
 import pandas
 import argparse
+import csv
 import sys
 sys.path.append('/Users/Guido/Desktop/ResearchDiffusion/scilpy/scripts')
+import scil_count_non_zero_voxels
+from os import getcwd
+from os import chdir
+import numpy as np
+chdir('/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/ConnectivityProject/AICHA_1mm/CC_Group/')
+file=np.genfromtxt('All_CC_run1_AICHA_1mm_tractVolumes.txt',dtype='string')
+
+runs=1
+for i in range(0,len(file)):
+    sub=file[i][0]
+    diff_dir='%s_diff%d/' % (sub,runs)
+    subpath=os.path.join(dir_path,sub,'DWI','Preproc1',diff_dir)
+    os.chdir(os.path.dirname(subpath))
+    #print(os.getcwd())
+    tmp=runpy.run_module(scil_count_non_zero_voxels('mask_wm_ants.nii.gz'))
+
+dir_path='/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/'
+sys.path.append('/Users/Guido/Desktop/ResearchDiffusion/tmpscilpy/scilpy/scrips')
 print(sys.path)
 import scil_count_non_zero_voxels
 
 
-from os import getcwd
-from os import chdir
 
 
-import csv
 
-chdir('/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/ConnectivityProject/AICHA_1mm/CC_Group/')
-import numpy as np
-file=np.genfromtxt('All_CC_run1_AICHA_1mm_tractVolumes.txt',dtype='string')
 
+
+
+runs=1
+for i in range(0,len(file)):
+    sub=file[i][0]
+
+    diff_dir='%s_diff%d/' % (sub,runs)
+    subpath=os.path.join(dir_path,sub,'DWI','Preproc1',diff_dir)
+    os.chdir(os.path.dirname(subpath))
+    #print(os.getcwd())
+    tmp=count_non_zero_voxels('mask_wm_ants.nii.gz'))
+    print(tmp)
+    #for j in range(2,len(file[0])):
+     #   tmp=float((file[i][j]))
+
+
+
+dir_path='/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/'
+sys.path.append('/Users/Guido/Desktop/ResearchDiffusion/tmpscilpy/scilpy/')
+from image.utils import count_non_zero_voxels
+
+
+runs=1
+for i in range(0,len(file)):
+    sub=file[i][0]
+
+    diff_dir='%s_diff%d/' % (sub,runs)
+    subpath=os.path.join(dir_path,sub,'DWI','Preproc1',diff_dir)
+    os.chdir(os.path.dirname(subpath))
+    #print(os.getcwd())
+    tmp=count_non_zero_voxels('mask_wm_ants.nii.gz')
+    print(tmp)
+    #for j in range(2,len(file[0])):
+     #   tmp=float((file[i][j]))
+
+
+
+
+
+"""
 def main():
     parser = argparse.ArgumentParser("name", description="my desc")
     parser.add_argument("volFile",action="store",help="txt file containing a list of tract volumes by subject")
@@ -34,3 +87,4 @@ print(counter(parser.var))
 
 if __name__ == "__main__":
     main()
+"""

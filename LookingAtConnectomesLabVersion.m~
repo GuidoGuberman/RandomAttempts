@@ -450,8 +450,8 @@ for i=1:size(BN_lDLPFC_SCs_Pvals,1)
 end
 labels=BN_CC_rDLPFC_sc22(1,2:end)
 tmp=[labels labels labels]
-BN_lDLPFC_Pvals_reshaped=[BN_lDLPFC_Pvals_reshaped;tmp]
-test=BN_lDLPFC_Pvals_reshaped(:,find(BN_lDLPFC_Pvals_reshaped(1,:)~=999))
+BN_rDLPFC_Pvals_reshaped=[BN_rDLPFC_Pvals_reshaped;tmp]
+test=BN_rDLPFC_Pvals_reshaped(:,find(BN_rDLPFC_Pvals_reshaped(1,:)~=999))
 FDR=mafdr(test(1,:),'BHFDR', true)
 test2=test
 test2(1,:)=FDR
