@@ -1,6 +1,14 @@
 #!/usr/bin/env python
-
+dir_path='/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/'
+HC_subs= ['TC002', 'TC003', 'TC004', 'TC005', 'TC006', 'TC008', 'TC009', 'TC010', 'TC011', 'TC013', 'TC014', 'TC015', 'TC016', 'TC017', 'TC018', 'TC019', 'TC020', \
+'TC021', 'TC022', 'TC023', 'TC024', 'TC025', 'TC026', 'TC028', 'TC029', 'TC030', 'TC031', 'TC032', 'TC034', 'TC036', 'TC037', 'TC038', 'TC039', 'TC040', 'TC041', \
+'TC043', 'TC044', 'TC045', 'TC046', 'TC049', 'TC052', 'TC055', 'TC059', 'TC060', 'TC058', 'TC061']
+CC_subs= ['TC001', 'TC007', 'TC033', 'TC042', 'TC054', 'TC056', 'TC057', 'TC071', 'TC073', 'TC074', 'TC076', 'TC077', 'TC078', 'TC079', 'TC050', 'TC069']
+#CC_subs=['TC001']
 #/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/ConnectivityProject
+runs=[1]
+parcs=['AICHA_1mm', 'BN_Atlas_246_1mm']
+Grp=['CC', 'HC']
 import numpy
 import pandas
 import argparse
@@ -8,12 +16,12 @@ import csv
 import sys
 sys.path.append('/Users/Guido/Desktop/ResearchDiffusion/scilpy/scripts')
 import scil_count_non_zero_voxels
-from os import getcwd
-from os import chdir
+from os import getcwd as pwd
+from os import chdir as cd
+from os import path
 import numpy as np
-chdir('/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/ConnectivityProject/AICHA_1mm/CC_Group/')
-file=np.genfromtxt('All_CC_run1_AICHA_1mm_tractVolumes.txt',dtype='string')
 
+"""
 runs=1
 for i in range(0,len(file)):
     sub=file[i][0]
@@ -22,39 +30,68 @@ for i in range(0,len(file)):
     os.chdir(os.path.dirname(subpath))
     #print(os.getcwd())
     tmp=runpy.run_module(scil_count_non_zero_voxels('mask_wm_ants.nii.gz'))
+"""
 
 dir_path='/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/'
 sys.path.append('/Users/Guido/Desktop/ResearchDiffusion/tmpscilpy/scilpy/scrips')
 print(sys.path)
 import scil_count_non_zero_voxels
-
-
-
-
-
-
-
-
-runs=1
-for i in range(0,len(file)):
-    sub=file[i][0]
-
-    diff_dir='%s_diff%d/' % (sub,runs)
-    subpath=os.path.join(dir_path,sub,'DWI','Preproc1',diff_dir)
-    os.chdir(os.path.dirname(subpath))
-    #print(os.getcwd())
-    tmp=count_non_zero_voxels('mask_wm_ants.nii.gz'))
-    print(tmp)
-    #for j in range(2,len(file[0])):
-     #   tmp=float((file[i][j]))
-
-
-
-dir_path='/Users/Guido/Documents/Analyses/subjects/PedsData/MNI/'
 sys.path.append('/Users/Guido/Desktop/ResearchDiffusion/tmpscilpy/scilpy/')
 from image.utils import count_non_zero_voxels
 
 
+
+
+
+trkcnts_CC=[]
+for j in range(0,len(runs)):
+    for l in range (0,len(Grp)):
+        sub_group='%s_subs' % (Grp[l])
+        for i in range(0,len(sub_group)):
+            for k in range (0,len(parcs)):
+                diff_dir='%s_diff%d/' % (sub_group[i],runs[j])
+                sub_roi_dir='%s_%d_ROIs' % (sub_group[i],runs[j])
+                conn_proj_dir='%s_%d_ConnectivityProject' % (sub_group[i],runs[j])
+        #FU_dir='%s_%d_FollowUpAnalyses/' % (CC_subs[i],runs[j])
+        #subpath=os.path.join(dir_path,CC_subs[i],'DWI','Preproc1',diff_dir)
+
+
+                subpath=path.join(dir_path,sub_group[i],'DWI','Preproc1',diff_dir,sub_roi_dir,conn_proj_dir)
+                cd(path.dirname(subpath))
+        #trk='%s_run1_prob_pft_fodf_npv%d_%s_fc02_20-200_noloops_migrated.trk' % (CC_subs[i],npv,intmethod)
+
+                parcdir='%s' % (parcs[k])
+                Group='%s_Group' % (Grp[l])
+                outdir=path.join(dir_path,'ConnectivityProject',Group)
+                cd(path.dirname(outdir))
+
+                filename='All_%s_run%d_%s_tractVolumes.txt' % (Grp[l],runs[j],parcs[k])
+                file=np.genfromtxt(filename,dtype='string')
+
+
+trkcnts_CC.append(trkcnt_CC)
+
+                for i in range(0,len(file)):
+                    sub=file[i][0]
+                    roi1=file[i][1]
+                    roi2=file[i][2]
+                    diff_dir='%s_diff%d/' % (sub,runs[j])
+                    subpath=path.join(dir_path,sub,'DWI','Preproc1',diff_dir)
+                    cd(path.dirname(subpath))
+    #print(os.getcwd())
+                    tmp_wm_vol=count_non_zero_voxels('mask_wm_ants.nii.gz')
+                    tmp_gm_vol=count_non_zero_voxels('mask_gm_ants.nii.gz')
+                    tmp_csf_vol=count_non_zero_voxels('map_csf_ants.nii.gz')
+                    wbv=tmp_wm_vol+tmp_gm_vol+tmp_csf_vol
+    #print(wbv)
+    #for j in range(2,len(file[0])):
+    tmp=float((file[i][3]))
+    norm_tract_vol=tmp/wbv
+    print(sub,roi1,roi2,tmp,wbv,norm_tract_vol)
+
+
+
+"""
 runs=1
 for i in range(0,len(file)):
     sub=file[i][0]
@@ -67,7 +104,26 @@ for i in range(0,len(file)):
     print(tmp)
     #for j in range(2,len(file[0])):
      #   tmp=float((file[i][j]))
+"""
 
+
+runs=1
+for i in range(0,len(file)):
+    sub=file[i][0]
+
+    diff_dir='%s_diff%d/' % (sub,runs)
+    subpath=os.path.join(dir_path,sub,'DWI','Preproc1',diff_dir)
+    os.chdir(os.path.dirname(subpath))
+    #print(os.getcwd())
+    tmp_wm_vol=count_non_zero_voxels('mask_wm_ants.nii.gz')
+    tmp_gm_vol=count_non_zero_voxels('mask_gm_ants.nii.gz')
+    tmp_csf_vol=count_non_zero_voxels('map_csf_ants.nii.gz')
+    wbv=tmp_wm_vol+tmp_gm_vol+tmp_csf_vol
+    #print(wbv)
+    for j in range(2,len(file[0])):
+        tmp=float((file[i][j]))
+        norm_tract_vol=tmp/wbv
+        print(tmp,wbv,norm_tract_vol)
 
 
 
