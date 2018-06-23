@@ -53,9 +53,10 @@ for k in range (0,len(parcs)):
             #subpath=path.join(dir_path,sub_group[i],'DWI','Preproc1',diff_dir,sub_roi_dir,conn_proj_dir)
         #trk='%s_run1_prob_pft_fodf_npv%d_%s_fc02_20-200_noloops_migrated.trk' % (CC_subs[i],npv,intmethod)
             #parcdir='%s' % (parcs[k])
-            Group='%s_Group' % (Grp[l])
+            Group='%s_Group/' % (Grp[l])
             outdir=path.join(dir_path,'ConnectivityProject',parcs[k], Group)
             cd(path.dirname(outdir))
+
             filename='All_%s_run%d_%s_tractVolumes.txt' % (Grp[l],runs[j],parcs[k])
             file=np.genfromtxt(filename,dtype='string')
             for i in range(0,len(file)):
@@ -65,6 +66,7 @@ for k in range (0,len(parcs)):
                 diff_dir='%s_diff%d/' % (sub,runs[j])
                 subpath=path.join(dir_path,sub,'DWI','Preproc1',diff_dir)
                 cd(path.dirname(subpath))
+
     #print(os.getcwd())
                 tmp_wm_vol=count_non_zero_voxels('mask_wm_ants.nii.gz')
                 tmp_gm_vol=count_non_zero_voxels('mask_gm_ants.nii.gz')
@@ -74,6 +76,7 @@ for k in range (0,len(parcs)):
     #for j in range(2,len(file[0])):
                 tmp=float((file[i][3]))
                 norm_tract_vol=tmp/wbv
+                print(sub,roi1,roi2,tmp,wbv,norm_tract_vol)
                 outmat=[sub,roi1,roi2,tmp,wbv,norm_tract_vol]
                 outmat.append(outmat)
             cd(path.dirname(outdir))
