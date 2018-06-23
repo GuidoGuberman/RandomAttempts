@@ -54,7 +54,7 @@ for k in range (0,len(parcs)):
         #trk='%s_run1_prob_pft_fodf_npv%d_%s_fc02_20-200_noloops_migrated.trk' % (CC_subs[i],npv,intmethod)
             parcdir='%s' % (parcs[k])
             Group='%s_Group' % (Grp[l])
-            outdir=path.join(dir_path,'ConnectivityProject',Group)
+            outdir=path.join(dir_path,'ConnectivityProject',parcdir, Group)
             cd(path.dirname(outdir))
             filename='All_%s_run%d_%s_tractVolumes.txt' % (Grp[l],runs[j],parcs[k])
             file=np.genfromtxt(filename,dtype='string')
