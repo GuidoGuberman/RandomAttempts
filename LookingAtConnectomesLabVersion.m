@@ -338,11 +338,16 @@ test2=test
 test2(1,:)=FDR
 test2(:,find(FDR<=0.05))
 
-% for i=1:size(AICHA_rDLPFC_splitIdx,2);
-%         eval(['AICHA_rDLPFC_sc' num2str(AICHA_rDLPFC_splitIdx(1,i))...
-%         '= AICHA_rDLPFC_SCs_Pvals([size(AICHA_rDLPFC_SCs_Pvals,1) i],find(AICHA_rDLPFC_SCs_Pvals(i,:)~=999))']);
-% end
-%Results: area 24 and 28 with each other, and area 28 with area 360.
+AICHA_rDLPFC_SCs_Pvals(size(AICHA_rDLPFC_SCs_Pvals,1)+1,:)=Aicha_CC_rDLPFC_sc28(1,2:end)
+
+for i=1:size(AICHA_rDLPFC_splitIdx,2); %Gives you label numbers that are connected with each ROI, across all your subjects
+        eval(['AICHA_rDLPFC_sc' num2str(AICHA_rDLPFC_splitIdx(1,i))...
+        '= AICHA_rDLPFC_SCs_Pvals([size(AICHA_rDLPFC_SCs_Pvals,1)],find(AICHA_rDLPFC_SCs_Pvals(i,:)~=999))']);
+end
+
+
+%Results: Nothing
+
 
 
 AICHA_lDLPFC_SCs_Pvals=ones(size(AICHA_lDLPFC_splitIdx,2),size(Aicha_CC_rDLPFC_sc28,2)-1)*999;%the variable for the size is chosen at random. All AICHA_SC mats have the same number of columns.
@@ -358,7 +363,7 @@ for i=1:size(AICHA_lDLPFC_splitIdx,2);
 end
 
 AICHA_lDLPFC_Pvals_reshaped=[];
-for i=1:size(AICHA_rDLPFC_SCs_Pvals,1)
+for i=1:size(AICHA_lDLPFC_SCs_Pvals,1)
     AICHA_lDLPFC_Pvals_reshaped=[AICHA_lDLPFC_Pvals_reshaped AICHA_lDLPFC_SCs_Pvals(i,:)]
 end
 labels=Aicha_CC_rDLPFC_sc28(1,2:end)
@@ -370,23 +375,14 @@ test2=test
 test2(1,:)=FDR
 test2(:,find(FDR<=0.05))
 
+AICHA_lDLPFC_SCs_Pvals(size(AICHA_lDLPFC_SCs_Pvals,1)+1,:)=labels
 
-% 
-% 
-% AICHA_lDLPFC_SCs_Pvals(size(AICHA_lDLPFC_SCs_Pvals,1)+1,:)=Aicha_CC_rDLPFC_sc28(1,2:end);
-% 
-% test=reshape(AICHA_lDLPFC_SCs_Pvals(1:end-1,:),1,'')
-% test=test(:,find(test(:,:)~=999))
-% FDR=mafdr(test)
-% find(FDR<=0.05)
-% 
-% 
-% for i=1:size(AICHA_lDLPFC_splitIdx,2);
-%         eval(['AICHA_lDLPFC_sc' num2str(AICHA_lDLPFC_splitIdx(1,i))...
-%         '= AICHA_lDLPFC_SCs_Pvals([size(AICHA_lDLPFC_SCs_Pvals,1) i],find(AICHA_lDLPFC_SCs_Pvals(i,:)~=999))']);
-% end
+for i=1:size(AICHA_lDLPFC_splitIdx,2); %Gives you label numbers that are connected with each ROI, across all your subjects
+        eval(['AICHA_lDLPFC_sc' num2str(AICHA_lDLPFC_splitIdx(1,i))...
+        '= AICHA_lDLPFC_SCs_Pvals([size(AICHA_lDLPFC_SCs_Pvals,1)],find(AICHA_lDLPFC_SCs_Pvals(i,:)~=999))']);
+end
 
-%Results: area 27 with area 57.
+
 
 
 
@@ -416,7 +412,7 @@ test2(1,:)=FDR
 test2(:,find(FDR<=0.05))
 
 % 
-BN_rDLPFC_SCs_Pvals(size(BN_rDLPFC_SCs_Pvals,1)+1,:)=BN_CC_rDLPFC_sc22(1,2:end);
+BN_rDLPFC_SCs_Pvals(size(BN_rDLPFC_SCs_Pvals,1)+1,:)=labels;
 % 
 % test=reshape(BN_rDLPFC_SCs_Pvals(1:end-1,:),1,'')
 % test=test(:,find(test(:,:)~=999))
@@ -425,7 +421,7 @@ BN_rDLPFC_SCs_Pvals(size(BN_rDLPFC_SCs_Pvals,1)+1,:)=BN_CC_rDLPFC_sc22(1,2:end);
 % 
 for i=1:size(BN_rDLPFC_splitIdx,2);
         eval(['BN_rDLPFC_sc' num2str(BN_rDLPFC_splitIdx(1,i))...
-        '= BN_rDLPFC_SCs_Pvals([size(BN_rDLPFC_SCs_Pvals,1) i],find(BN_rDLPFC_SCs_Pvals(i,:)~=999))']);
+        '= BN_rDLPFC_SCs_Pvals([size(BN_rDLPFC_SCs_Pvals,1)],find(BN_rDLPFC_SCs_Pvals(i,:)~=999))']);
 end
 
 %Results: Area 22 with area 246.
@@ -459,18 +455,14 @@ test2(:,find(FDR<=0.05))
 
 
 
-%
-% BN_lDLPFC_SCs_Pvals(size(BN_lDLPFC_SCs_Pvals,1)+1,:)=BN_CC_rDLPFC_sc22(1,2:end);
-% 
-% test=reshape(BN_lDLPFC_SCs_Pvals(1:end-1,:),1,'')
-% test=test(:,find(test(:,:)~=999))
-% FDR=mafdr(test)
-% find(FDR<=0.05)
-% 
-% for i=1:size(BN_lDLPFC_splitIdx,2);
-%         eval(['BN_lDLPFC_sc' num2str(BN_lDLPFC_splitIdx(1,i))...
-%         '= BN_lDLPFC_SCs_Pvals([size(BN_lDLPFC_SCs_Pvals,1) i],find(BN_lDLPFC_SCs_Pvals(i,:)~=999))']);
-% end
+
+BN_lDLPFC_SCs_Pvals(size(BN_lDLPFC_SCs_Pvals,1)+1,:)=labels;
+
+
+for i=1:size(BN_lDLPFC_splitIdx,2);
+        eval(['BN_lDLPFC_sc' num2str(BN_lDLPFC_splitIdx(1,i))...
+        '= BN_lDLPFC_SCs_Pvals([size(BN_lDLPFC_SCs_Pvals,1)],find(BN_lDLPFC_SCs_Pvals(i,:)~=999))']);
+end
 
 %Results: No significant differences.
 
