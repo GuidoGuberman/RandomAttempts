@@ -509,15 +509,16 @@ Aicha_DLPFC_split_HC_file='ALL_HC_run1_AICHA_1mm_spConn.xlsx';
 CC_subs=unique(Aicha_DLPFC_split_CC_vars);
 HC_subs=unique(Aicha_DLPFC_split_HC_vars);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 cd '/Users/guigub/Documents/Research/PhD/Project2/DLPFCConnectivityProject' %CHANGE ON LAB COMPUTER
 % cd CC_subs(1,1)]
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 cd '/Users/guigub/Downloads/ConnectivityProject/Aicha_1mm/CC_Group'
-Aicha_1mm_CC_AFD_file='All_CC_run1_AICHA_1mm_meanAFD.xlsx';
+Aicha_1mm_CC_AFD_file='All_CC_run1_AICHA_1mm_meanAFDalongStrs.xlsx';
 [Aicha_1mm_CC_AFD_data, Aicha_1mm_CC_AFD_vars, Aicha_1mm_CC_AFD_raw]=xlsread(Aicha_1mm_CC_AFD_file);
 
-Aicha_1mm_CC_vol_file='All_CC_run1_AICHA_1mm_tractVolumes.xlsx';
+Aicha_1mm_CC_vol_file='All_CC_run1_AICHA_1mm_normalized_tractVolumes.xlsx';
 [Aicha_1mm_CC_vol_data, Aicha_1mm_CC_vol_vars, Aicha_1mm_CC_vol_raw]=xlsread(Aicha_1mm_CC_vol_file);
 
 Aicha_1mm_CC_FA_file='All_CC_run1_AICHA_1mm_FA.xlsx';
@@ -534,10 +535,10 @@ Aicha_1mm_CC_AD_file='All_CC_run1_AICHA_1mm_AD.xlsx';
 
 
 cd '/Users/guigub/Downloads/ConnectivityProject/Aicha_1mm/HC_Group'
-Aicha_1mm_HC_AFD_file='All_HC_run1_AICHA_1mm_meanAFD.xlsx';
+Aicha_1mm_HC_AFD_file='All_HC_run1_AICHA_1mm_meanAFDalongStrs.xlsx';
 [Aicha_1mm_HC_AFD_data, Aicha_1mm_HC_AFD_vars, Aicha_1mm_HC_AFD_raw]=xlsread(Aicha_1mm_HC_AFD_file);
 
-Aicha_1mm_HC_vol_file='All_HC_run1_AICHA_1mm_tractVolumes.xlsx';
+Aicha_1mm_HC_vol_file='All_HC_run1_AICHA_1mm_normalized_tractVolumes.xlsx';
 [Aicha_1mm_HC_vol_data, Aicha_1mm_HC_vol_vars, Aicha_1mm_HC_vol_raw]=xlsread(Aicha_1mm_HC_vol_file);
 
 Aicha_1mm_HC_FA_file='All_HC_run1_AICHA_1mm_FA.xlsx';
@@ -552,12 +553,12 @@ Aicha_1mm_HC_RD_file='All_HC_run1_AICHA_1mm_RD.xlsx';
 Aicha_1mm_HC_AD_file='All_HC_run1_AICHA_1mm_AD.xlsx';
 [Aicha_1mm_HC_AD_data, Aicha_1mm_HC_AD_vars, Aicha_1mm_HC_AD_raw]=xlsread(Aicha_1mm_HC_AD_file);
 
-
+% 
 cd '/Users/guigub/Downloads/ConnectivityProject/BN_Atlas_246_1mm/CC_Group'
-BN_1mm_CC_AFD_file='All_CC_run1_BN_Atlas_246_1mm_meanAFD.xlsx';
+BN_1mm_CC_AFD_file='All_CC_run1_BN_Atlas_246_1mm_meanAFDalongStrs.xlsx';
 [BN_1mm_CC_AFD_data, BN_1mm_CC_AFD_vars, BN_1mm_CC_AFD_raw]=xlsread(BN_1mm_CC_AFD_file);
 
-BN_1mm_CC_vol_file='All_CC_run1_BN_Atlas_246_1mm_tractVolumes.xlsx';
+BN_1mm_CC_vol_file='All_CC_run1_BN_Atlas_246_1mm_normalized_tractVolumes.xlsx';
 [BN_1mm_CC_vol_data, BN_1mm_CC_vol_vars, BN_1mm_CC_vol_raw]=xlsread(BN_1mm_CC_vol_file);
 
 BN_1mm_CC_FA_file='All_CC_run1_BN_Atlas_246_1mm_FA.xlsx';
@@ -573,10 +574,10 @@ BN_1mm_CC_AD_file='All_CC_run1_BN_Atlas_246_1mm_AD.xlsx';
 [BN_1mm_CC_AD_data, BN_1mm_CC_AD_vars, BN_1mm_CC_AD_raw]=xlsread(BN_1mm_CC_AD_file);
 
 cd '/Users/guigub/Downloads/ConnectivityProject/BN_Atlas_246_1mm/HC_Group'
-BN_1mm_HC_AFD_file='All_HC_run1_BN_Atlas_246_1mm_meanAFD.xlsx';
+BN_1mm_HC_AFD_file='All_HC_run1_BN_Atlas_246_1mm_meanAFDalongStrs.xlsx';
 [BN_1mm_HC_AFD_data, BN_1mm_HC_AFD_vars, BN_1mm_HC_AFD_raw]=xlsread(BN_1mm_HC_AFD_file);
 
-BN_1mm_HC_vol_file='All_HC_run1_BN_Atlas_246_1mm_tractVolumes.xlsx';
+BN_1mm_HC_vol_file='All_HC_run1_BN_Atlas_246_1mm_normalized_tractVolumes.xlsx';
 [BN_1mm_HC_vol_data, BN_1mm_HC_vol_vars, BN_1mm_HC_vol_raw]=xlsread(BN_1mm_HC_vol_file);
 
 BN_1mm_HC_FA_file='All_HC_run1_BN_Atlas_246_1mm_FA.xlsx';
@@ -591,6 +592,279 @@ BN_1mm_HC_RD_file='All_HC_run1_BN_Atlas_246_1mm_RD.xlsx';
 BN_1mm_HC_AD_file='All_HC_run1_BN_Atlas_246_1mm_AD.xlsx';
 [BN_1mm_HC_AD_data, BN_1mm_HC_AD_vars, BN_1mm_HC_AD_raw]=xlsread(BN_1mm_HC_AD_file);
 
+
+%% Tractometry analyses version 2
+
+%IDEA: Take subs from any of the Metrics files, and take the ROI
+%combinations from the Volume file, which is the only one that has them
+%split as intergers. Then, since the indexes correspond, use them to
+%perform the appropriate comparisons. 
+
+%AICHA
+CC_subs_all_Aicha_comparisons=unique(Aicha_1mm_CC_AD_vars(:,1));
+HC_subs_all_Aicha_comparisons=unique(Aicha_1mm_HC_AD_vars(:,1));
+
+
+roi_set1_all_CC_Aicha_comparisons=Aicha_1mm_CC_vol_data(:,1);
+roi_set2_all_CC_Aicha_comparisons=Aicha_1mm_CC_vol_data(:,2);
+roi_set1_all_HC_Aicha_comparisons=Aicha_1mm_HC_vol_data(:,1);
+roi_set2_all_HC_Aicha_comparisons=Aicha_1mm_HC_vol_data(:,2);
+
+t=[roi_set1_all_CC_Aicha_comparisons roi_set2_all_CC_Aicha_comparisons];
+
+roi_pairs_all_unique_Aicha_comparisons=unique(t,'rows');
+
+%Add the roi matrices to the data in which it is missing.
+%AD
+CC_Aicha_all_AD=[roi_set1_all_CC_Aicha_comparisons roi_set2_all_CC_Aicha_comparisons Aicha_1mm_CC_AD_data(:,5)];
+HC_Aicha_all_AD=[roi_set1_all_HC_Aicha_comparisons roi_set2_all_HC_Aicha_comparisons Aicha_1mm_HC_AD_data(:,5)];
+%MD
+CC_Aicha_all_MD=[roi_set1_all_CC_Aicha_comparisons roi_set2_all_CC_Aicha_comparisons Aicha_1mm_CC_MD_data(:,5)];
+HC_Aicha_all_MD=[roi_set1_all_HC_Aicha_comparisons roi_set2_all_HC_Aicha_comparisons Aicha_1mm_HC_MD_data(:,5)];
+%RD
+CC_Aicha_all_RD=[roi_set1_all_CC_Aicha_comparisons roi_set2_all_CC_Aicha_comparisons Aicha_1mm_CC_RD_data(:,5)];
+HC_Aicha_all_RD=[roi_set1_all_HC_Aicha_comparisons roi_set2_all_HC_Aicha_comparisons Aicha_1mm_HC_RD_data(:,5)];
+%FA
+CC_Aicha_all_FA=[roi_set1_all_CC_Aicha_comparisons roi_set2_all_CC_Aicha_comparisons Aicha_1mm_CC_FA_data(:,5)];
+HC_Aicha_all_FA=[roi_set1_all_HC_Aicha_comparisons roi_set2_all_HC_Aicha_comparisons Aicha_1mm_HC_FA_data(:,5)];
+%AFD
+CC_Aicha_all_AFD=[roi_set1_all_CC_Aicha_comparisons roi_set2_all_CC_Aicha_comparisons Aicha_1mm_CC_AFD_data(:,5)];
+HC_Aicha_all_AFD=[roi_set1_all_HC_Aicha_comparisons roi_set2_all_HC_Aicha_comparisons Aicha_1mm_HC_AFD_data(:,5)];
+%Normalized volume
+CC_Aicha_all_normVol=[roi_set1_all_CC_Aicha_comparisons roi_set2_all_CC_Aicha_comparisons Aicha_1mm_CC_vol_data(:,5)];
+HC_Aicha_all_normVol=[roi_set1_all_HC_Aicha_comparisons roi_set2_all_HC_Aicha_comparisons Aicha_1mm_HC_vol_data(:,5)];
+
+%Create pre-allocated matrices where the p-value of each comparison will appear for
+%each measurement.
+Aicha_AD_results=ones(size(roi_pairs_all_unique_Aicha_comparisons,1),1)*999
+Aicha_MD_results=ones(size(roi_pairs_all_unique_Aicha_comparisons,1),1)*999
+Aicha_RD_results=ones(size(roi_pairs_all_unique_Aicha_comparisons,1),1)*999
+Aicha_FA_results=ones(size(roi_pairs_all_unique_Aicha_comparisons,1),1)*999
+Aicha_AFD_results=ones(size(roi_pairs_all_unique_Aicha_comparisons,1),1)*999
+Aicha_normVol_results=ones(size(roi_pairs_all_unique_Aicha_comparisons,1),1)*999
+
+for i=1:size(roi_pairs_all_unique_Aicha_comparisons,1);
+    CC_compIdx=find(CC_Aicha_all_AD(:,1)==roi_pairs_all_unique_Aicha_comparisons(i,1) & ...
+        CC_Aicha_all_AD(:,2)==roi_pairs_all_unique_Aicha_comparisons(i,2))
+    
+    HC_compIdx=find(HC_Aicha_all_AD(:,1)==roi_pairs_all_unique_Aicha_comparisons(i,1) & ...
+        HC_Aicha_all_AD(:,2)==roi_pairs_all_unique_Aicha_comparisons(i,2))
+    
+%     [PAD,HAD]=ranksum(CC_Aicha_all_AD(CC_compIdx,3),HC_Aicha_all_AD(HC_compIdx,3))
+%     [PMD,HMD]=ranksum(CC_Aicha_all_MD(CC_compIdx,3),HC_Aicha_all_MD(HC_compIdx,3))
+%     [PRD,HRD]=ranksum(CC_Aicha_all_RD(CC_compIdx,3),HC_Aicha_all_RD(HC_compIdx,3))
+%     [PFA,HFA]=ranksum(CC_Aicha_all_FA(CC_compIdx,3),HC_Aicha_all_FA(HC_compIdx,3))
+%     [PAFD,HAFD]=ranksum(CC_Aicha_all_AFD(CC_compIdx,3),HC_Aicha_all_AFD(HC_compIdx,3))
+%     [PnVol,HnVol]=ranksum(CC_Aicha_all_normVol(CC_compIdx,3),HC_Aicha_all_normVol(HC_compIdx,3))
+
+    [HAD,PAD]=ttest2(CC_Aicha_all_AD(CC_compIdx,3),HC_Aicha_all_AD(HC_compIdx,3))
+    [HMD,PMD]=ttest2(CC_Aicha_all_MD(CC_compIdx,3),HC_Aicha_all_MD(HC_compIdx,3))
+    [HRD,PRD]=ttest2(CC_Aicha_all_RD(CC_compIdx,3),HC_Aicha_all_RD(HC_compIdx,3))
+    [HFA,PFA]=ttest2(CC_Aicha_all_FA(CC_compIdx,3),HC_Aicha_all_FA(HC_compIdx,3))
+    [HAFD,PAFD]=ttest2(CC_Aicha_all_AFD(CC_compIdx,3),HC_Aicha_all_AFD(HC_compIdx,3))
+    [HnVol,PnVol]=ttest2(CC_Aicha_all_normVol(CC_compIdx,3),HC_Aicha_all_normVol(HC_compIdx,3))
+
+    Aicha_AD_results(i,1)=PAD
+    Aicha_MD_results(i,1)=PMD
+    Aicha_RD_results(i,1)=PRD
+    Aicha_FA_results(i,1)=PFA
+    Aicha_AFD_results(i,1)=PAFD
+    Aicha_normVol_results(i,1)=PnVol
+end
+
+Aicha_AD_results=[Aicha_AD_results roi_pairs_all_unique_Aicha_comparisons]
+Aicha_MD_results=[Aicha_MD_results roi_pairs_all_unique_Aicha_comparisons]
+Aicha_RD_results=[Aicha_RD_results roi_pairs_all_unique_Aicha_comparisons]
+Aicha_FA_results=[Aicha_FA_results roi_pairs_all_unique_Aicha_comparisons]
+Aicha_AFD_results=[Aicha_AFD_results roi_pairs_all_unique_Aicha_comparisons]
+Aicha_normVol_results=[Aicha_normVol_results roi_pairs_all_unique_Aicha_comparisons]
+
+
+test=[Aicha_AD_results(:,1);Aicha_MD_results(:,1);Aicha_RD_results(:,1);Aicha_FA_results(:,1)...
+    ;Aicha_AFD_results(:,1);Aicha_normVol_results(:,1)]
+
+test2=mafdr(test,'BHFDR', true)
+find(test2<=0.05)
+
+
+%Correcting for multiple comparisons. Replaces original P values.
+Aicha_AD_results(:,1)=mafdr(Aicha_AD_results(:,1),'BHFDR', true)
+Aicha_MD_results(:,1)=mafdr(Aicha_MD_results(:,1),'BHFDR', true)
+Aicha_RD_results(:,1)=mafdr(Aicha_RD_results(:,1),'BHFDR', true)
+Aicha_FA_results(:,1)=mafdr(Aicha_FA_results(:,1),'BHFDR', true)
+Aicha_AFD_results(:,1)=mafdr(Aicha_AFD_results(:,1),'BHFDR', true)
+Aicha_normVol_results(:,1)=mafdr(Aicha_normVol_results(:,1),'BHFDR', true)
+
+
+
+AD_sigresults=Aicha_AD_results(find(Aicha_AD_results(:,1)<=0.05),:)
+MD_sigresults=Aicha_MD_results(find(Aicha_MD_results(:,1)<=0.05),:)
+RD_sigresults=Aicha_RD_results(find(Aicha_RD_results(:,1)<=0.05),:)
+FA_sigresults=Aicha_FA_results(find(Aicha_FA_results(:,1)<=0.05),:)
+AFD_sigresults=Aicha_AFD_results(find(Aicha_AFD_results(:,1)<=0.05),:)
+normVol_sigresults=Aicha_normVol_results(find(Aicha_normVol_results(:,1)<=0.05),:)
+
+
+%Brainnetome
+CC_subs_all_BN_comparisons=unique(BN_1mm_CC_AD_vars(:,1));
+HC_subs_all_BN_comparisons=unique(BN_1mm_HC_AD_vars(:,1));
+
+
+roi_set1_all_CC_BN_comparisons=BN_1mm_CC_vol_data(:,1);
+roi_set2_all_CC_BN_comparisons=BN_1mm_CC_vol_data(:,2);
+roi_set1_all_HC_BN_comparisons=BN_1mm_HC_vol_data(:,1);
+roi_set2_all_HC_BN_comparisons=BN_1mm_HC_vol_data(:,2);
+
+t=[roi_set1_all_CC_BN_comparisons roi_set2_all_CC_BN_comparisons];
+
+roi_pairs_all_unique_BN_comparisons=unique(t,'rows');
+
+%Add the roi matrices to the data in which it is missing.
+%AD
+CC_BN_all_AD=[roi_set1_all_CC_BN_comparisons roi_set2_all_CC_BN_comparisons BN_1mm_CC_AD_data(:,5)];
+HC_BN_all_AD=[roi_set1_all_HC_BN_comparisons roi_set2_all_HC_BN_comparisons BN_1mm_HC_AD_data(:,5)];
+%MD
+CC_BN_all_MD=[roi_set1_all_CC_BN_comparisons roi_set2_all_CC_BN_comparisons BN_1mm_CC_MD_data(:,5)];
+HC_BN_all_MD=[roi_set1_all_HC_BN_comparisons roi_set2_all_HC_BN_comparisons BN_1mm_HC_MD_data(:,5)];
+%RD
+CC_BN_all_RD=[roi_set1_all_CC_BN_comparisons roi_set2_all_CC_BN_comparisons BN_1mm_CC_RD_data(:,5)];
+HC_BN_all_RD=[roi_set1_all_HC_BN_comparisons roi_set2_all_HC_BN_comparisons BN_1mm_HC_RD_data(:,5)];
+%FA
+CC_BN_all_FA=[roi_set1_all_CC_BN_comparisons roi_set2_all_CC_BN_comparisons BN_1mm_CC_FA_data(:,5)];
+HC_BN_all_FA=[roi_set1_all_HC_BN_comparisons roi_set2_all_HC_BN_comparisons BN_1mm_HC_FA_data(:,5)];
+%AFD
+CC_BN_all_AFD=[roi_set1_all_CC_BN_comparisons roi_set2_all_CC_BN_comparisons BN_1mm_CC_AFD_data(:,5)];
+HC_BN_all_AFD=[roi_set1_all_HC_BN_comparisons roi_set2_all_HC_BN_comparisons BN_1mm_HC_AFD_data(:,5)];
+%Normalized volume
+CC_BN_all_normVol=[roi_set1_all_CC_BN_comparisons roi_set2_all_CC_BN_comparisons BN_1mm_CC_vol_data(:,5)];
+HC_BN_all_normVol=[roi_set1_all_HC_BN_comparisons roi_set2_all_HC_BN_comparisons BN_1mm_HC_vol_data(:,5)];
+
+%Create pre-allocated matrices where the p-value of each comparison will appear for
+%each measurement.
+BN_AD_results=ones(size(roi_pairs_all_unique_BN_comparisons,1),1)*999
+BN_MD_results=ones(size(roi_pairs_all_unique_BN_comparisons,1),1)*999
+BN_RD_results=ones(size(roi_pairs_all_unique_BN_comparisons,1),1)*999
+BN_FA_results=ones(size(roi_pairs_all_unique_BN_comparisons,1),1)*999
+BN_AFD_results=ones(size(roi_pairs_all_unique_BN_comparisons,1),1)*999
+
+% BN_AFD_results=ones(size(roi_pairs_all_unique_BN_comparisons,1),5)*999 %MODIFIED TO CHECK FOR NORMALITY
+%row 1 is the p value for the ttest, row 2 is the H value for CC group JB
+%test; row 3 is H value for HC group JB test; row 4 is H value for CC group
+%lillietest; row 5 is H value for HC group lillietest.
+%
+BN_normVol_results=ones(size(roi_pairs_all_unique_BN_comparisons,1),1)*999
+
+for i=1:size(roi_pairs_all_unique_BN_comparisons,1);
+    CC_compIdx=find(CC_BN_all_AD(:,1)==roi_pairs_all_unique_BN_comparisons(i,1) & ...
+        CC_BN_all_AD(:,2)==roi_pairs_all_unique_BN_comparisons(i,2))
+    
+    HC_compIdx=find(HC_BN_all_AD(:,1)==roi_pairs_all_unique_BN_comparisons(i,1) & ...
+        HC_BN_all_AD(:,2)==roi_pairs_all_unique_BN_comparisons(i,2))
+    
+%     [PAD,HAD]=ranksum(CC_BN_all_AD(CC_compIdx,3),HC_BN_all_AD(HC_compIdx,3))
+%     [PMD,HMD]=ranksum(CC_BN_all_MD(CC_compIdx,3),HC_BN_all_MD(HC_compIdx,3))
+%     [PRD,HRD]=ranksum(CC_BN_all_RD(CC_compIdx,3),HC_BN_all_RD(HC_compIdx,3))
+%     [PFA,HFA]=ranksum(CC_BN_all_FA(CC_compIdx,3),HC_BN_all_FA(HC_compIdx,3))
+%     [PAFD,HAFD]=ranksum(CC_BN_all_AFD(CC_compIdx,3),HC_BN_all_AFD(HC_compIdx,3))
+%     [PnVol,HnVol]=ranksum(CC_BN_all_normVol(CC_compIdx,3),HC_BN_all_normVol(HC_compIdx,3))
+
+    [HAD,PAD]=ttest2(CC_BN_all_AD(CC_compIdx,3),HC_BN_all_AD(HC_compIdx,3))
+    [HMD,PMD]=ttest2(CC_BN_all_MD(CC_compIdx,3),HC_BN_all_MD(HC_compIdx,3))
+    [HRD,PRD]=ttest2(CC_BN_all_RD(CC_compIdx,3),HC_BN_all_RD(HC_compIdx,3))
+    [HFA,PFA]=ttest2(CC_BN_all_FA(CC_compIdx,3),HC_BN_all_FA(HC_compIdx,3))
+    [HAFD,PAFD]=ttest2(CC_BN_all_AFD(CC_compIdx,3),HC_BN_all_AFD(HC_compIdx,3))
+    [HnVol,PnVol]=ttest2(CC_BN_all_normVol(CC_compIdx,3),HC_BN_all_normVol(HC_compIdx,3))
+    
+%     H_jb_CC_AFD=jbtest(CC_BN_all_AFD(CC_compIdx,3))
+%     H_jb_HC_AFD=jbtest(HC_BN_all_AFD(HC_compIdx,3))
+%     H_ll_CC_AFD=lillietest(CC_BN_all_AFD(CC_compIdx,3))
+%     H_ll_HC_AFD=lillietest(HC_BN_all_AFD(HC_compIdx,3))
+    
+    BN_AD_results(i,1)=PAD
+    BN_MD_results(i,1)=PMD
+    BN_RD_results(i,1)=PRD
+    BN_FA_results(i,1)=PFA
+    BN_AFD_results(i,1)=PAFD
+    BN_normVol_results(i,1)=PnVol
+    
+%     BN_AFD_results(i,2)=H_jb_CC_AFD
+%     BN_AFD_results(i,3)=H_jb_HC_AFD
+%     BN_AFD_results(i,4)=H_ll_CC_AFD
+%     BN_AFD_results(i,5)=H_ll_HC_AFD
+    
+end
+
+BN_AD_results=[BN_AD_results roi_pairs_all_unique_BN_comparisons]
+BN_MD_results=[BN_MD_results roi_pairs_all_unique_BN_comparisons]
+BN_RD_results=[BN_RD_results roi_pairs_all_unique_BN_comparisons]
+BN_FA_results=[BN_FA_results roi_pairs_all_unique_BN_comparisons]
+BN_AFD_results=[BN_AFD_results roi_pairs_all_unique_BN_comparisons]
+BN_normVol_results=[BN_normVol_results roi_pairs_all_unique_BN_comparisons]
+
+
+
+test=[BN_AD_results(:,1);BN_MD_results(:,1);BN_RD_results(:,1);BN_FA_results(:,1)...
+    ;BN_AFD_results(:,1);BN_normVol_results(:,1)]
+
+test2=mafdr(test)
+find(test2<=0.05)
+
+
+
+BN_AD_results(:,1)=mafdr(BN_AD_results(:,1),'BHFDR', true)
+BN_MD_results(:,1)=mafdr(BN_MD_results(:,1),'BHFDR', true)
+BN_RD_results(:,1)=mafdr(BN_RD_results(:,1),'BHFDR', true)
+BN_FA_results(:,1)=mafdr(BN_FA_results(:,1),'BHFDR', true)
+BN_AFD_results(:,1)=mafdr(BN_AFD_results(:,1),'BHFDR', true)
+BN_normVol_results(:,1)=mafdr(BN_normVol_results(:,1),'BHFDR', true)
+
+
+
+
+
+AD_sigresults=BN_AD_results(find(BN_AD_results(:,1)<=0.05),:)
+MD_sigresults=BN_MD_results(find(BN_MD_results(:,1)<=0.05),:)
+RD_sigresults=BN_RD_results(find(BN_RD_results(:,1)<=0.05),:)
+FA_sigresults=BN_FA_results(find(BN_FA_results(:,1)<=0.05),:)
+AFD_sigresults=BN_AFD_results(find(BN_AFD_results(:,1)<=0.05),:)
+normVol_sigresults=BN_normVol_results(find(BN_normVol_results(:,1)<=0.05),:)
+
+
+
+
+
+
+%% Follow-up analyses
+%total number of streamlines between groups
+% CC_strs=[3977344, 2516943, 4137991, 2802682, 2479361, 2447485, 4728235, 2686240, 2493739, 2639602, 2798498, 2619986, 2756129, 2609117, 2953998, 3134095];
+CC_strs=[3145543, 1776903, 3005703, 2270258, 1698800, 1771263, 3999320, 1875886, 1834581, 1985146, 2390098, 2164869, 1981502, 1773421, 1975964, 2121804]
+% HC_strs=[2726197, 2599035, 2453146, 2783387, 2729751, 2696889, 5427167, 2669944, 2836902, 3112364, 2735507, 2727913, 3860319, 2870103, 3039772, 2402047,...
+%     2968707, 2731092, 2457032, 2605310, 2715354, 2755162, 3142640, 2575148, 2696554, 5317977, 3254845, 2717667, 2354266, 2666162, 2796350, 5800878, 2965766, ...
+%     2540950, 2380272, 2959735, 3026157, 3005037, 2789417, 3033137, 3044413, 4976265, 2371450, 2701823, 2968664, 2926917];
+
+
+HC_strs=[2056132, 1865010, 1879422, 1964658, 2005261, 2087935, 4902945, 2231502, 2290169, 2185522, 1825638, 2260362, 3218063, 2003381, 2220253, 1731770,...
+    2569299, 2021594, 1770323, 1899227, 1860614, 1936251, 2563178, 1972414, 1973592, 4833045, 2409248, 2043302, 1790198, 2314832, 2118414, 5068318, 2039981, 1914259,...
+    2032397, 2291313, 2206200, 2306766, 2508316, 2295299, 1963483, 4207512, 1934601, 1901361, 2061506, 2133566]
+[H,P,CI,STATS]=ttest2(CC_strs,HC_strs)%Parametric
+[P,H,STATS]=ranksum(CC_strs,HC_strs)%Non-parametric
+
+CC_strs=CC_strs'
+HC_strs=HC_strs'
+%Correlation: total number of streamlines by nodal degree
+[RHO,PVAL]=corr([HC_strs degAicha_HC_rDLPFC_sc24])%Default is Pearson, a parametric analysys
+[RHO,PVAL]=corr([CC_strs degAicha_CC_rDLPFC_sc24])
+
+[RHO,PVAL]=corr([HC_strs degAicha_HC_rDLPFC_sc24],'type','Spearman')%Non-parametric
+[RHO,PVAL]=corr([CC_strs degAicha_CC_rDLPFC_sc24],'type','Spearman')
+
+histogram(HC_strs,30)
+hold on;
+histogram(CC_strs,30)
+
+
+
+%% Old code
 %%%%%%%%%%%%%%%%%%%%%%%
 %AFD
 % %AICHA 24-28
@@ -650,6 +924,11 @@ BN_1mm_HC_AD_file='All_HC_run1_BN_Atlas_246_1mm_AD.xlsx';
 % 
 % % [P3,H3]=ranksum(AICHA_HC_27_57_AFD_data,AICHA_CC_27_57_AFD_data)
 % [H3,P3]=ttest2(AICHA_HC_27_57_AFD_data,AICHA_CC_27_57_AFD_data)
+
+
+
+
+
 
 
 
@@ -990,33 +1269,3 @@ Aicha_rDLPFCSigResults(5,:)=Aicha_sig_labels;
 
 Aicha_lDLPFCSigResults
 
-
-
-
-%% Follow-up analyses
-%total number of streamlines between groups
-% CC_strs=[3977344, 2516943, 4137991, 2802682, 2479361, 2447485, 4728235, 2686240, 2493739, 2639602, 2798498, 2619986, 2756129, 2609117, 2953998, 3134095];
-CC_strs=[3145543, 1776903, 3005703, 2270258, 1698800, 1771263, 3999320, 1875886, 1834581, 1985146, 2390098, 2164869, 1981502, 1773421, 1975964, 2121804]
-% HC_strs=[2726197, 2599035, 2453146, 2783387, 2729751, 2696889, 5427167, 2669944, 2836902, 3112364, 2735507, 2727913, 3860319, 2870103, 3039772, 2402047,...
-%     2968707, 2731092, 2457032, 2605310, 2715354, 2755162, 3142640, 2575148, 2696554, 5317977, 3254845, 2717667, 2354266, 2666162, 2796350, 5800878, 2965766, ...
-%     2540950, 2380272, 2959735, 3026157, 3005037, 2789417, 3033137, 3044413, 4976265, 2371450, 2701823, 2968664, 2926917];
-
-
-HC_strs=[2056132, 1865010, 1879422, 1964658, 2005261, 2087935, 4902945, 2231502, 2290169, 2185522, 1825638, 2260362, 3218063, 2003381, 2220253, 1731770,...
-    2569299, 2021594, 1770323, 1899227, 1860614, 1936251, 2563178, 1972414, 1973592, 4833045, 2409248, 2043302, 1790198, 2314832, 2118414, 5068318, 2039981, 1914259,...
-    2032397, 2291313, 2206200, 2306766, 2508316, 2295299, 1963483, 4207512, 1934601, 1901361, 2061506, 2133566]
-[H,P,CI,STATS]=ttest2(CC_strs,HC_strs)%Parametric
-[P,H,STATS]=ranksum(CC_strs,HC_strs)%Non-parametric
-
-CC_strs=CC_strs'
-HC_strs=HC_strs'
-%Correlation: total number of streamlines by nodal degree
-[RHO,PVAL]=corr([HC_strs degAicha_HC_rDLPFC_sc24])%Default is Pearson, a parametric analysys
-[RHO,PVAL]=corr([CC_strs degAicha_CC_rDLPFC_sc24])
-
-[RHO,PVAL]=corr([HC_strs degAicha_HC_rDLPFC_sc24],'type','Spearman')%Non-parametric
-[RHO,PVAL]=corr([CC_strs degAicha_CC_rDLPFC_sc24],'type','Spearman')
-
-histogram(HC_strs,30)
-hold on;
-histogram(CC_strs,30)
